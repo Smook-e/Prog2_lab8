@@ -59,6 +59,31 @@ public class StudentService {
 }
 
     
-    
+    public int submitQuiz(Student student, String lessonId, Quiz quiz, List<Integer> studentAnswers) {
+
+    if (student.getQuizScores().containsKey(lessonId)) {
+        return -1;  // quiz already taken
+    }
+    int score = 0;
+    //method get correct answers
+    for (int i = 0; i < quiz.getCorrectAnswers().size(); i++) {
+        if (studentAnswers.get(i) == quiz.getCorrectAnswers().get(i)) {
+            score++;
+        }
+    }
+
+    student.getQuizScores().put(lessonId, score);
+    userService.save();
+
+    return score; 
+}
+
+    public Student getStudentById(String studentId)
+    {
+        return (Student) userService.getUserByID(studentId);
+    }
+     public Map<String, List<String>> getStudentProgress(Student s) {
+        return s.getProgress();
+    }
      //Y check when retrieving lessons in the course, in y CourseService or LessonService:
 }
