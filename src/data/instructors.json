@@ -1,3 +1,10 @@
-{
-    "name": "USER"
-}
+[
+  {
+    "createdCourses": [],
+    "userID": "I001",
+    "password": "Alice",
+    "userName": "alice@example.com",
+    "role": "Instructor",
+    "email": "password123"
+  }
+]

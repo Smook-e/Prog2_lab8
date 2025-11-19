@@ -25,12 +25,15 @@ public class SignInApp {
     static UserService users;
     static CourseService courseService;
     static StudentService studentService;
+    static InstructorManagment instructorManagment;
 
     static {
         try {
-            users = new UserService("C:\\Users\\USER\\Documents\\NetBeansProjects\\Prog2_lab8\\src\\data\\users.json");
-            courseService = new CourseService("C:\\Users\\USER\\Documents\\NetBeansProjects\\Prog2_lab8\\src\\data\\courses.json");
-            studentService = new StudentService(users, courseService);
+         users = new UserService("data/users.json");
+        courseService = new CourseService("data/courses.json");
+        studentService = new StudentService(users, courseService, "data/students.json");
+        instructorManagment = new InstructorManagment(courseService, studentService, "data/instructors.json");
+
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (IOException e) {
             System.out.println("Error loading users!");
@@ -216,38 +219,43 @@ public class SignInApp {
 
         User u = users.getUserByUsername(username);
 
-        if (u.getRole().equalsIgnoreCase("Student")) {
-            // Option 2: safely create Student object if needed
-            Student s;
-            if (u instanceof Student) {
-                s = (Student) u;
-            } else {
-                s = new Student(u.getUserID(), u.getUserName(), u.getEmail(), u.getPassword());
-                s.setStudentService(studentService);
-            }
+        
+    if (u.getRole().equalsIgnoreCase("Student")) {
+        // Load student from students.json
+        Student s = studentService.getDb().stream()
+                .filter(st -> st.getUserID().equals(u.getUserID()))
+                .findFirst()
+                .orElse(null);
+
+        if (s == null) {
+            // If not in students.json yet, create new and add
+            s = new Student(u.getUserID(), u.getUserName(), u.getEmail(), u.getPassword());
+            s.setStudentService(studentService);
+            studentService.addStudent(s);
+        } else {
+            s.setStudentService(studentService);
+        }
             studentDashboard(s);
             frame.dispose();
 
         } else if (u.getRole().equalsIgnoreCase("Instructor")) {
-            Instructor inst;
-            if (u instanceof Instructor) {
-                inst = (Instructor) u;
-            } else {
-                inst = new Instructor(u.getUserID(), u.getUserName(), u.getEmail(), u.getPassword());
-            }
+        // Load instructor from instructors.json
+        Instructor inst = instructorManagment.getDb().stream()
+                .filter(i -> i.getUserID().equals(u.getUserID()))
+                .findFirst()
+                .orElse(null);
 
-
-            InstructorManagment instructorManagment=new InstructorManagment(courseService, studentService);
+        if (inst == null) {
+            inst = new Instructor(u.getUserID(), u.getUserName(), u.getEmail(), u.getPassword());
             inst.setInstructorManagment(instructorManagment);
+            instructorManagment.addInstructor(inst, users);
+        } else {
+            inst.setInstructorManagment(instructorManagment);
+        }
 
-
-            InstructorDashboard dashboard = new InstructorDashboard(instructorManagment,inst);
-            dashboard.setVisible(true);
-            dashboard.setLocationRelativeTo(null);
-
-            // Open CourseManagementStudent frame
-            frame.dispose();
-
+        InstructorDashboard dashboard = new InstructorDashboard(instructorManagment, inst);
+        dashboard.setVisible(true);
+        dashboard.setLocationRelativeTo(null);
 
         } else {
 

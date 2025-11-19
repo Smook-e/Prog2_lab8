@@ -84,5 +84,27 @@
       "10067"
     ],
     "status": "rejected"
+  },
+  {
+    "courseId": "C001",
+    "title": "Java Basics",
+    "description": "Intro to Java",
+    "instructorId": "I001",
+    "lessons": [
+      {
+        "lessonId": "L001",
+        "title": "Lesson 1: Variables",
+        "content": "Content here",
+        "Resources": []
+      },
+      {
+        "lessonId": "L001",
+        "title": "Lesson 1: Variables",
+        "content": "Content here",
+        "Resources": []
+      }
+    ],
+    "students": [],
+    "status": "pending"
   }
 ]

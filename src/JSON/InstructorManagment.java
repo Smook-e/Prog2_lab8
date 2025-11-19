@@ -9,6 +9,7 @@ import JSON.StudentService;
 import Courses.Lesson;
 import Users.Instructor;
 import Users.Student;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,13 +18,13 @@ import java.util.Map;
  *
  * @author HP
  */
-public class InstructorManagment {
+public class InstructorManagment extends JsonDatabaseManager<Instructor> {
     private CourseService courseService;
     private StudentService studentService;
-    public InstructorManagment(CourseService courseService,StudentService studentService)
-    {
-        this.courseService=courseService;
-        this.studentService=studentService;
+   public InstructorManagment(CourseService courseService, StudentService studentService, String filePath) throws IOException {
+        super(filePath, Instructor.class); // <-- load instructors.json
+        this.courseService = courseService;
+        this.studentService = studentService;
     }
     
     public boolean createCourse(Instructor instructor,String courseId,String title,String description)
@@ -155,6 +156,15 @@ public double getLessonAverage(String courseId, String lessonId) {
     int completedCount = completedLessons.size();
     return (completedCount * 100.0) / totalLessons;
 }
+public boolean addInstructor(Instructor instructor, UserService users) {
+        if (db.stream().anyMatch(i -> i.getUserID().equals(instructor.getUserID()))) return false;
+        db.add(instructor);
+        save();             // save instructors.json
+
+        users.addUser(instructor);  
+        users.save();       // update users.json
+        return true;
+    }
 
 
    }

@@ -1,54 +1,69 @@
-
-import FrontEnd.BrowseEnrollCourses;
-
-import Courses.Course;
-import Courses.Lesson;
-import JSON.CourseService;
-
-import JSON.JsonDatabaseManager;
-import JSON.StudentService;
-import JSON.UserService;
-import Users.User;
-import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
-import java.io.*;
-import java.nio.file.*;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import Users.*;
+import Courses.*;
+import JSON.*;
 import java.util.*;
 
 public class Main {
-    private static String hashPassword(String password) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hash = md.digest(password.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for (byte b : hash) {
-                sb.append(String.format("%02x", b));
-            }
-            return sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("SHA-256 not available", e);
-        }
-    }
-    public static void main(String[] args) throws IOException {
+
+    public static void main(String[] args) throws Exception {
+        // --- Initialize Services & Managers ---
+     String usersFile = "C:\\Users\\USER\\Documents\\NetBeansProjects\\Prog2_lab8\\src\\data\\users.json";
+String coursesFile = "C:\\Users\\USER\\Documents\\NetBeansProjects\\Prog2_lab8\\src\\data\\courses.json";
+String studentsFile = "C:\\Users\\USER\\Documents\\NetBeansProjects\\Prog2_lab8\\src\\data\\students.json";
+String instructorsFile = "C:\\Users\\USER\\Documents\\NetBeansProjects\\Prog2_lab8\\src\\data\\instructors.json";
 
 
-       UserService users= new UserService("src\\JSON\\users.json");
-       CourseService courseService = new CourseService("src\\JSON\\courses.json");
-       StudentService studentService = new StudentService(users, courseService);
+        UserService userService = new UserService(usersFile);
+        CourseService courseService = new CourseService(coursesFile);
 
-        List<Course> courses = studentService.browseCourses();
-//        courseService.enrollStudent("C002", "10067");
-//        courseService.save();
-//
-       ArrayList<Course> c =  courseService.getInstructorCourses("10813");
-        for(Course course : c) {
-            System.out.println(course.getCourseId());
-            System.out.println(course.getTitle());
-        }
+        // StudentService now takes file path
+        StudentService studentService = new StudentService(userService, courseService, studentsFile);
 
+        // InstructorManagment now takes file path
+        InstructorManagment instructorManagment = new InstructorManagment(courseService, studentService, instructorsFile);
 
+        // --- Create Instructor ---
+        Instructor inst = new Instructor("I001", "Alice", "alice@example.com", "password123");
+        inst.setInstructorManagment(instructorManagment);
+        instructorManagment.addInstructor(inst, userService); // adds to instructors.json & users.json
+
+        // --- Instructor creates a Course & Lesson ---
+        String courseId = "C001";
+        String lessonId = "L001";
+        instructorManagment.createCourse(inst, courseId, "Java Basics", "Intro to Java");
+        instructorManagment.createLesson(inst, courseId, lessonId, "Lesson 1: Variables", "Content here");
+
+        // --- Create Student ---
+        Student student = new Student("S001", "Bob", "bob@example.com", "pass456");
+        student.setStudentService(studentService);
+        studentService.addStudent(student); // adds to students.json & users.json
+
+        // --- Enroll student in course ---
+        student.enrollCourse(courseId);
+
+        // --- Create a Quiz ---
+        Quiz quiz = new Quiz(lessonId, Arrays.asList(1, 2, 3)); // correct answers
+
+        // --- Student submits the Quiz ---
+        List<Integer> studentAnswers = Arrays.asList(1, 2, 3); // perfect score
+        int score = student.takeQuiz(lessonId, quiz, studentAnswers);
+
+        System.out.println("Quiz score: " + score);
+
+        // --- Student marks Lesson complete ---
+        boolean completed = student.markLessonCompleted(courseId, lessonId);
+        System.out.println("Lesson completed: " + completed);
+
+        // --- Check Student progress ---
+        System.out.println("Student progress: " + student.getProgress());
+        System.out.println("Student enrolled courses: " + student.getEnrolledCourses());
+
+        // --- Lesson average across all students ---
+        double average = instructorManagment.getLessonAverage(courseId, lessonId);
+        System.out.println("Lesson average: " + average);
+
+        // --- Student course completion percentage ---
+        double completion = instructorManagment.getStudentCourseCompletionPercentage(student.getUserID(), courseId);
+        System.out.println("Course completion %: " + completion);
     }
 }
-

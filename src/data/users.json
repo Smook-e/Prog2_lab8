@@ -68,5 +68,19 @@
     "userName": "student1",
     "role": "Student",
     "email": "student1@gmail.com"
+  },
+  {
+    "userID": "I001",
+    "password": "Alice",
+    "userName": "alice@example.com",
+    "role": "Instructor",
+    "email": "password123"
+  },
+  {
+    "userID": "S001",
+    "password": "student",
+    "userName": "Bob",
+    "role": "bob@example.com",
+    "email": "pass456"
   }
 ]
