@@ -43,19 +43,22 @@ public class StudentService {
         if (c == null) return new ArrayList<>();
          return c.getLessons();  
     }
-    public boolean markLessonCompleted(Student student, String courseId, String lessonId) {
-        student.getProgress().putIfAbsent(courseId, new ArrayList<>());
-
-        if (!student.getProgress().get(courseId).contains(lessonId)) {
-            student.getProgress().get(courseId).add(lessonId);
-            userService.save();  
-            return true;
-        }
-
+   public boolean markLessonCompleted(Student student, String courseId, String lessonId) {
+    // Check the student score
+    Integer score = student.getQuizScores().get(lessonId);
+    if (score == null || score <Student.PASSING_SCORE ) {
         return false;
     }
-    public Student getStudentById(String studentId)
-    {
-        return (Student) userService.getUserByID(studentId);
+    student.getProgress().putIfAbsent(courseId, new ArrayList<>());
+    if (!student.getProgress().get(courseId).contains(lessonId)) {
+        student.getProgress().get(courseId).add(lessonId);
+        userService.save();  
+        return true;
     }
+    return false;
+}
+
+    
+    
+     //Y check when retrieving lessons in the course, in y CourseService or LessonService:
 }

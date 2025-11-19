@@ -61,5 +61,12 @@
     "userName": "final2",
     "role": "admin",
     "email": "email@gmail.com"
+  },
+  {
+    "userID": "10852",
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+    "userName": "student1",
+    "role": "Student",
+    "email": "student1@gmail.com"
   }
 ]

@@ -8,7 +8,10 @@ import Courses.Course;
 import JSON.StudentService;
 import Courses.Lesson;
 import Users.Instructor;
+import Users.Student;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -76,10 +79,22 @@ public class InstructorManagment {
         }
         return courseService.deleteLesson(courseId, lessonId);
     }
-    public ArrayList<String> viewStudentsProgress(String courseId)
-    {
-        return courseService.getEnrolledStudents(courseId);
+    
+    
+    public List<String> getStudentsInCourse(String courseId) {
+        return courseService.getEnrolledStudents(courseId); 
     }
+    
+    public Map<String, List<String>> getStudentProgress(String studentId)
+    {
+        Student s = studentService.getStudentById(studentId);
+        if (s == null) return null;
+
+        return s.getProgress(); 
+    }
+    
+    
+    
     public CourseService getCourseService()
     {
         return courseService;
@@ -88,6 +103,7 @@ public class InstructorManagment {
     {
         return studentService;
     }
+    
     public void setCourseService(CourseService courseService)
     {
         this.courseService=courseService;
@@ -99,6 +115,12 @@ public class InstructorManagment {
     public ArrayList<Course> getCoursesByInstructor(String instructorId){
         return courseService.getCoursesByInstructor(instructorId);
     }
+    
+    public Map<String, Integer> getStudentQuizScores(String studentId) {
+    Student s = studentService.getStudentById(studentId);
+    return s.getQuizScores();  
+}
+
    }
 
     

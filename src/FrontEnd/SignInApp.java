@@ -28,8 +28,8 @@ public class SignInApp {
 
     static {
         try {
-            users = new UserService("src\\JSON\\users.json");
-            courseService = new CourseService("src\\JSON\\courses.json");
+            users = new UserService("C:\\Users\\USER\\Documents\\NetBeansProjects\\Prog2_lab8\\src\\data\\users.json");
+            courseService = new CourseService("C:\\Users\\USER\\Documents\\NetBeansProjects\\Prog2_lab8\\src\\data\\courses.json");
             studentService = new StudentService(users, courseService);
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (IOException e) {
