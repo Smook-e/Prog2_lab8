@@ -27,7 +27,7 @@ public class StudentService extends JsonDatabaseManager<Student> {
             return false;
         }
         student.getEnrolledCourses().add(courseId);
-        userService.save(); 
+        save(); 
         return true;
     }
 
@@ -76,7 +76,7 @@ public class StudentService extends JsonDatabaseManager<Student> {
     }
 
     student.getQuizScores().put(lessonId, score);
-    userService.save();
+    save();
 
     return score; 
 }

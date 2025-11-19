@@ -1,8 +1,12 @@
 [
   {
-    "enrolledCourses": [],
+    "enrolledCourses": [
+      "C001"
+    ],
     "progress": {},
-    "quizScores": {},
+    "quizScores": {
+      "L001": 3
+    },
     "userID": "S001",
     "password": "student",
     "userName": "Bob",

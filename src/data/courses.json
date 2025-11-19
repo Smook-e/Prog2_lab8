@@ -102,6 +102,12 @@
         "title": "Lesson 1: Variables",
         "content": "Content here",
         "Resources": []
+      },
+      {
+        "lessonId": "L001",
+        "title": "Lesson 1: Variables",
+        "content": "Content here",
+        "Resources": []
       }
     ],
     "students": [],
