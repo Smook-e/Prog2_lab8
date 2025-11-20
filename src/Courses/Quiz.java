@@ -28,7 +28,7 @@ public class Quiz {
     {
         this.quizId=quizId;
     }
-    public void addQuestionIdS(String id)
+    public void addQuestionIds(String id)
     {
         questionIds.add(id);
     }
@@ -41,15 +41,5 @@ public class Quiz {
     {
        return "Quiz(" + quizId + ")Questions: "+questionIds.size();
     }
-    //to test //// // In Quiz.java
-public List<Integer> getCorrectAnswers() {
-    List<Integer> correct = new ArrayList<>();
-    for (String qId : questionIds) {
-        // For testing, let's assume correct choice is always 1
-        correct.add(1);
-    }
-    return correct;
-}
-
     
 }

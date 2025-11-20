@@ -1,0 +1,23 @@
+[
+  {
+    "quizId": "Quiz1",
+    "questionIds": [
+      "Quiz1_Q1"
+    ]
+  },
+  {
+    "quizId": "quiz2",
+    "questionIds": [
+      "quiz2_Q1",
+      "quiz2_Q2"
+    ]
+  },
+  {
+    "quizId": "quiz3",
+    "questionIds": [
+      "quiz3_Q1",
+      "quiz3_Q2",
+      "quiz3_Q3"
+    ]
+  }
+]
