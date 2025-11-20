@@ -20,6 +20,26 @@ public class Quiz {
         this.quizId=quizId;
         this.questionIds=new ArrayList<>();
     }
-    
+    public String getQuizId()
+    {
+        return quizId;
+    }
+    public void setQuizId(String quizId)
+    {
+        this.quizId=quizId;
+    }
+    public void addQuestionIdS(String id)
+    {
+        questionIds.add(id);
+    }
+    public List<String> getQuestionIds()
+    {
+        return questionIds;
+    }
+    @Override
+    public String toString()
+    {
+       return "Quiz(" + quizId + ")Questions: "+questionIds.size();
+    }
     
 }
