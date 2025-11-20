@@ -28,7 +28,7 @@ public class Quiz {
     {
         this.quizId=quizId;
     }
-    public void addQuestionIdS(String id)
+    public void addQuestionIds(String id)
     {
         questionIds.add(id);
     }

@@ -4,6 +4,10 @@
  */
 package FrontEnd;
 
+import Courses.Question;
+import Courses.Quiz;
+import JSON.JsonDatabaseManager;
+
 /**
  *
  * @author HP
@@ -13,8 +17,14 @@ public class CreateQuiz extends javax.swing.JFrame {
     /**
      * Creates new form CreateQuiz
      */
+    private JsonDatabaseManager<Quiz> quizDb;
+    private JsonDatabaseManager<Question> questionDb;
+    private Quiz quiz;
+    private int questionCount=1;
+    
     public CreateQuiz() {
         initComponents();
+        quizDb= new JsonDatabaseManager<>("",Quiz.class)
     }
 
     /**
