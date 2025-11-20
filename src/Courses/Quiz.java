@@ -4,10 +4,22 @@
  */
 package Courses;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author HP
  */
 public class Quiz {
+    private String quizId;
+    private List<String> questionIds;
+    public Quiz(){};
+    public Quiz(String quizId)
+    {
+        this.quizId=quizId;
+        this.questionIds=new ArrayList<>();
+    }
+    
     
 }
