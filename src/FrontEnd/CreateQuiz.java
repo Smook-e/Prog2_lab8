@@ -7,6 +7,12 @@ package FrontEnd;
 import Courses.Question;
 import Courses.Quiz;
 import JSON.JsonDatabaseManager;
+import JSON.QuizService;
+import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -17,14 +23,11 @@ public class CreateQuiz extends javax.swing.JFrame {
     /**
      * Creates new form CreateQuiz
      */
-    private JsonDatabaseManager<Quiz> quizDb;
-    private JsonDatabaseManager<Question> questionDb;
+    private QuizService quizService;
     private Quiz quiz;
-    private int questionCount=1;
-    
     public CreateQuiz() {
         initComponents();
-        quizDb= new JsonDatabaseManager<>("",Quiz.class)
+        quizService=new QuizService();
     }
 
     /**
@@ -63,6 +66,11 @@ public class CreateQuiz extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton1.setText("Next");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -119,6 +127,11 @@ public class CreateQuiz extends javax.swing.JFrame {
         });
 
         jButton2.setText("Next");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Save Quiz");
 
@@ -199,6 +212,48 @@ public class CreateQuiz extends javax.swing.JFrame {
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField6ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String quizId=jTextField1.getText().trim();
+        if(quizId.isEmpty())
+        {
+            JOptionPane.showMessageDialog(this,"Please enter quizId");
+            return;
+        }
+        if(quizService.quizIdExists(quizId))
+        {
+             JOptionPane.showMessageDialog(this,"Quiz ID exists.");
+             return;
+        }
+        quiz=quizService.createQuiz(quizId);
+        ((java.awt.CardLayout)getContentPane().getLayout()).show(getContentPane(), "card3");
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String questionText=jTextField2.getText().trim();
+        if(questionText.isEmpty())
+        {
+            JOptionPane.showMessageDialog(this,"please enter a question.");
+            return;
+        }
+        String choice1=jTextField3.getText().trim();
+        String choice2=jTextField4.getText().trim();
+        String choice3=jTextField5.getText().trim();
+        String choice4=jTextField6.getText().trim();
+        if(choice1.isEmpty()||choice2.isEmpty()||choice3.isEmpty()||choice4.isEmpty())
+        {
+            JOptionPane.showMessageDialog(this,"please enter all the choices");
+            return;
+        }
+        int correctChoice=0;
+        if(jRadioButton1.isSelected())correctChoice=1;
+        else if(jRadioButton2.isSelected())correctChoice=2;
+        else if(jRadioButton3.isSelected())correctChoice=3;
+        else if(jRadioButton4.isSelected())correctChoice=4;
+        
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
