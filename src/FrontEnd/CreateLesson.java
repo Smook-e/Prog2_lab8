@@ -138,6 +138,7 @@ public class CreateLesson extends javax.swing.JFrame {
     ManageLesson ml = new ManageLesson(instructorManagment, instructor, courseId);
     ml.setVisible(true);
     ml.setLocationRelativeTo(null);
+    this.dispose();
 });
 
         
