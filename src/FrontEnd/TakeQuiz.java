@@ -28,6 +28,7 @@ public class TakeQuiz extends javax.swing.JFrame {
     private Quiz quiz;
     private List<Integer> answers;
     private int questionIndex=0;
+    private boolean feedbackCheck=false;
     
     public TakeQuiz(String quizId) {
         initComponents();
@@ -54,6 +55,10 @@ public class TakeQuiz extends javax.swing.JFrame {
     private void showQuestion(int questionIndex)
     {
         if(questionIndex<0||questionIndex>=questions.size())return;
+        jTextField2.setBackground(Color.WHITE);
+        jTextField3.setBackground(Color.WHITE);
+        jTextField4.setBackground(Color.WHITE);
+        jTextField5.setBackground(Color.WHITE);
         Question question=questions.get(questionIndex);
         jTextField1.setText(question.getText());
         jTextField2.setText(question.getChoices().get(0));
@@ -214,6 +219,23 @@ public class TakeQuiz extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(feedbackCheck)
+        {
+            feedbackCheck=false;
+            questionIndex++;
+        if(questionIndex< questions.size())
+        {
+            showQuestion(questionIndex);
+        }
+        else
+        {
+            int score=quizService.calculateScore(quiz.getQuizId(), answers);
+            JOptionPane.showMessageDialog(this, "Quiz Completed! Score:"+score+"/"+questions.size());
+            //open the frame that called it 
+            this.dispose();
+        }
+           return; 
+        }
         int selected=-1;
         if(jRadioButton1.isSelected())selected=0;
         else if(jRadioButton2.isSelected())selected=1;
@@ -227,17 +249,14 @@ public class TakeQuiz extends javax.swing.JFrame {
         answers.set(questionIndex, selected);
         Question q=questions.get(questionIndex);
         feedback(selected,q);
-        questionIndex++;
-        if(questionIndex< questions.size())
+        feedbackCheck=true;
+        if(questionIndex==questions.size()-1)
         {
-            showQuestion(questionIndex);
+            jButton1.setText("Finish Quiz");
         }
         else
         {
-            int score=quizService.calculateScore(quiz.getQuizId(), answers);
-            JOptionPane.showMessageDialog(this, "Quiz Completed! Score:"+score+"/"+questions.size());
-            //open the frame that called it 
-            this.dispose();
+            jButton1.setText("Next");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -31,5 +31,38 @@
       "rome"
     ],
     "correctChoice": 0
+  },
+  {
+    "questionId": "quiz3_Q1",
+    "text": "love is",
+    "choices": [
+      "care",
+      "hurt",
+      "abuse",
+      "dump"
+    ],
+    "correctChoice": 0
+  },
+  {
+    "questionId": "quiz3_Q2",
+    "text": "dogs are",
+    "choices": [
+      "birds",
+      "animals",
+      "objects",
+      "reptiles"
+    ],
+    "correctChoice": 1
+  },
+  {
+    "questionId": "quiz3_Q3",
+    "text": "century is",
+    "choices": [
+      "10 years",
+      "1 year",
+      "100 years",
+      "9 years"
+    ],
+    "correctChoice": 2
   }
 ]
