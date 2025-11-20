@@ -7,6 +7,7 @@ import JSON.CourseService;
 import JSON.InstructorManagment;
 import Users.Instructor;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -132,9 +133,14 @@ public class CreateLesson extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Failed to create lesson!");
             return;
         }
-
-
         this.dispose();
+     SwingUtilities.invokeLater(() -> {
+    ManageLesson ml = new ManageLesson(instructorManagment, instructor, courseId);
+    ml.setVisible(true);
+    ml.setLocationRelativeTo(null);
+});
+
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

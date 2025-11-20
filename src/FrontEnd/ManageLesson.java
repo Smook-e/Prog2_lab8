@@ -177,8 +177,9 @@ public class ManageLesson extends javax.swing.JFrame {
     }//GEN-LAST:event_button4ActionPerformed
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-       //instructorManagment,instructorManagment.getCourseService(), instructor
-        CreateLesson createLesson=new CreateLesson(instructorManagment,instructorManagment.getCourseService(),instructor,courseId);
+       //
+        CreateLesson createLesson=new CreateLesson(instructorManagment, instructorManagment.getCourseService(), instructor, courseId);
+
         createLesson.setVisible(true);
         createLesson.setLocationRelativeTo(null);
     }//GEN-LAST:event_button1ActionPerformed
