@@ -8,19 +8,24 @@ import Courses.Course;
 import JSON.StudentService;
 import Courses.Lesson;
 import Users.Instructor;
+import Users.Student;
+import Users.User;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author HP
  */
-public class InstructorManagment {
+public class InstructorManagment extends JsonDatabaseManager<Instructor> {
     private CourseService courseService;
     private StudentService studentService;
-    public InstructorManagment(CourseService courseService,StudentService studentService)
-    {
-        this.courseService=courseService;
-        this.studentService=studentService;
+   public InstructorManagment(CourseService courseService, StudentService studentService, String filePath) throws IOException {
+        super(filePath, Instructor.class); // <-- load instructors.json
+        this.courseService = courseService;
+        this.studentService = studentService;
     }
     
     public boolean createCourse(Instructor instructor,String courseId,String title,String description)
@@ -31,6 +36,7 @@ public class InstructorManagment {
         if(done)
         {
             instructor.addCreatedCourse(courseId);
+            save(); 
         } 
         return done;
        
@@ -76,10 +82,22 @@ public class InstructorManagment {
         }
         return courseService.deleteLesson(courseId, lessonId);
     }
-    public ArrayList<String> viewStudentsProgress(String courseId)
-    {
-        return courseService.getEnrolledStudents(courseId);
+    
+    
+    public List<String> getStudentsInCourse(String courseId) {
+        return courseService.getEnrolledStudents(courseId); 
     }
+    
+    public Map<String, List<String>> getStudentProgress(String studentId)
+    {
+        Student s = studentService.getStudentById(studentId);
+        if (s == null) return null;
+
+        return s.getProgress(); 
+    }
+    
+    
+    
     public CourseService getCourseService()
     {
         return courseService;
@@ -88,6 +106,7 @@ public class InstructorManagment {
     {
         return studentService;
     }
+    
     public void setCourseService(CourseService courseService)
     {
         this.courseService=courseService;
@@ -99,6 +118,58 @@ public class InstructorManagment {
     public ArrayList<Course> getCoursesByInstructor(String instructorId){
         return courseService.getCoursesByInstructor(instructorId);
     }
+    
+    public Map<String, Integer> getStudentQuizScores(String studentId) {
+    Student s = studentService.getStudentById(studentId);
+    return s.getQuizScores();  
+}
+public double getLessonAverage(String courseId, String lessonId) {
+    ArrayList<String> students = courseService.getEnrolledStudents(courseId);
+
+    int total = 0;
+    int count = 0;
+
+    for (String sid : students) {
+        Student s = studentService.getStudentById(sid);
+        Integer score = s.getQuizScores().get(lessonId);
+
+        if (score != null) {
+            total += score;
+            count++;
+        }
+    }
+
+    return count == 0 ? 0 : (double) total / count;
+}
+
+
+   public double getStudentCourseCompletionPercentage(String studentId, String courseId) {
+    Student student = studentService.getStudentById(studentId);
+    Course course = courseService.getCourseById(courseId);
+
+    if (student == null || course == null) return 0.0;
+    int totalLessons = course.getLessons().size();
+    if (totalLessons == 0) return 0.0;
+    List<String> completedLessons = student.getProgress().getOrDefault(courseId, new ArrayList<>());
+    //.getOrDefault(key, defaultValue) is a Java Map method that:
+     //Tries to get the value for the key (courseId)
+//If the key is not present (the student has not completed any lessons in this course yet), 
+//it returns the default value, which is a new empty list.
+    int completedCount = completedLessons.size();
+    return (completedCount * 100.0) / totalLessons;
+}
+public boolean addInstructor(Instructor instructor, UserService users) {
+        if (db.stream().anyMatch(i -> i.getUserID().equals(instructor.getUserID()))) return false;
+        db.add(instructor);
+        save();             // save instructors.json
+    // Save users.json
+    User user = new User(instructor.getUserID(), instructor.getPassword(), instructor.getUserName(), "Instructor", instructor.getEmail());
+    users.addUser(user);  
+    users.save();  
+    return true;
+    }
+
+
    }
 
     

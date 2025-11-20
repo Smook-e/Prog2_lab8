@@ -3,9 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package FrontEnd;
+import JSON.CourseService;
 import JSON.InstructorManagment;
 import Users.Instructor;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -17,13 +19,20 @@ public class CreateLesson extends javax.swing.JFrame {
      * Creates new form CreatAndEditLesson
      */
     private InstructorManagment instructorManagment;
+    private CourseService courseService;   // ← add this
     private Instructor instructor;
     private String courseId;
-    public CreateLesson(InstructorManagment instructorManagment,Instructor instructor, String courseId) {
-       
-        this.instructorManagment=instructorManagment;
-        this.instructor=instructor;
-        this.courseId=courseId;
+
+    public CreateLesson(InstructorManagment instructorManagment,
+                        CourseService courseService,
+                        Instructor instructor,
+                        String courseId) {
+
+        this.instructorManagment = instructorManagment;
+        this.courseService = courseService;
+        this.instructor = instructor;
+        this.courseId = courseId;
+
         initComponents();
     }
 
@@ -124,9 +133,14 @@ public class CreateLesson extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Failed to create lesson!");
             return;
         }
-
-
         this.dispose();
+     SwingUtilities.invokeLater(() -> {
+    ManageLesson ml = new ManageLesson(instructorManagment, instructor, courseId);
+    ml.setVisible(true);
+    ml.setLocationRelativeTo(null);
+});
+
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

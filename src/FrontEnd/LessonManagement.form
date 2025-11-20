@@ -65,7 +65,7 @@
     </Container>
     <Component class="javax.swing.JButton" name="markCompletedBtn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="view completed lessons"/>
+        <Property name="text" type="java.lang.String" value="mark completed lessons"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="markCompletedBtnActionPerformed"/>
