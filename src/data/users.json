@@ -71,16 +71,16 @@
   },
   {
     "userID": "I001",
-    "password": "Alice",
-    "userName": "alice@example.com",
+    "password": "John",
+    "userName": "john@mail.com",
     "role": "Instructor",
-    "email": "password123"
+    "email": "pass"
   },
   {
     "userID": "S001",
     "password": "student",
-    "userName": "Bob",
-    "role": "bob@example.com",
-    "email": "pass456"
+    "userName": "Mark",
+    "role": "mark@mail.com",
+    "email": "pass"
   }
 ]

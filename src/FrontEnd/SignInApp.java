@@ -239,25 +239,22 @@ public class SignInApp {
             frame.dispose();
 
         } else if (u.getRole().equalsIgnoreCase("Instructor")) {
-        // Load instructor from instructors.json
-        Instructor inst = instructorManagment.getDb().stream()
-                .filter(i -> i.getUserID().equals(u.getUserID()))
-                .findFirst()
-                .orElse(null);
-
-        if (inst == null) {
-            inst = new Instructor(u.getUserID(), u.getUserName(), u.getEmail(), u.getPassword());
-            inst.setInstructorManagment(instructorManagment);
-            instructorManagment.addInstructor(inst, users);
-        } else {
-            inst.setInstructorManagment(instructorManagment);
-        }
-
-        InstructorDashboard dashboard = new InstructorDashboard(instructorManagment, inst);
-        dashboard.setVisible(true);
-        dashboard.setLocationRelativeTo(null);
-
-        } else {
+    Instructor inst = instructorManagment.getDb().stream()
+            .filter(i -> i.getUserID().equals(u.getUserID()))
+            .findFirst()
+            .orElse(null);
+    if (inst == null) {
+        inst = new Instructor(u.getUserID(), u.getUserName(), u.getEmail(), u.getPassword());
+        inst.setInstructorManagment(instructorManagment);
+        instructorManagment.addInstructor(inst, users);
+    } 
+    else {
+        inst.setInstructorManagment(instructorManagment);
+    }
+    InstructorDashboard dashboard = new InstructorDashboard(instructorManagment, inst);
+    dashboard.setVisible(true);
+    dashboard.setLocationRelativeTo(null);
+} else {
 
                 AdminCourseDashboard a = new AdminCourseDashboard(courseService);
                 a.setVisible(true);

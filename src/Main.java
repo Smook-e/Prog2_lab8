@@ -3,67 +3,84 @@ import Courses.*;
 import JSON.*;
 import java.util.*;
 
+import java.util.*;
+
 public class Main {
-
     public static void main(String[] args) throws Exception {
-        // --- Initialize Services & Managers ---
-     String usersFile = "C:\\Users\\USER\\Documents\\NetBeansProjects\\Prog2_lab8\\src\\data\\users.json";
-String coursesFile = "C:\\Users\\USER\\Documents\\NetBeansProjects\\Prog2_lab8\\src\\data\\courses.json";
-String studentsFile = "C:\\Users\\USER\\Documents\\NetBeansProjects\\Prog2_lab8\\src\\data\\students.json";
-String instructorsFile = "C:\\Users\\USER\\Documents\\NetBeansProjects\\Prog2_lab8\\src\\data\\instructors.json";
 
+        // ======= FILE PATHS =======
+        String usersFile = "C:\\Users\\USER\\Documents\\NetBeansProjects\\Prog2_lab8\\src\\data\\users.json";
+        String coursesFile = "C:\\Users\\USER\\Documents\\NetBeansProjects\\Prog2_lab8\\src\\data\\courses.json";
+        String studentsFile = "C:\\Users\\USER\\Documents\\NetBeansProjects\\Prog2_lab8\\src\\data\\students.json";
+        String instructorsFile = "C:\\Users\\USER\\Documents\\NetBeansProjects\\Prog2_lab8\\src\\data\\instructors.json";
 
+        // ======= SERVICES =======
         UserService userService = new UserService(usersFile);
         CourseService courseService = new CourseService(coursesFile);
-
-        // StudentService now takes file path
         StudentService studentService = new StudentService(userService, courseService, studentsFile);
+        InstructorManagment instructorService = new InstructorManagment(courseService, studentService, instructorsFile);
 
-        // InstructorManagment now takes file path
-        InstructorManagment instructorManagment = new InstructorManagment(courseService, studentService, instructorsFile);
-
-        // --- Create Instructor ---
-        Instructor inst = new Instructor("I001", "Alice", "alice@example.com", "password123");
-        inst.setInstructorManagment(instructorManagment);
-        instructorManagment.addInstructor(inst, userService); // adds to instructors.json & users.json
-
-        // --- Instructor creates a Course & Lesson ---
-        String courseId = "C001";
-        String lessonId = "L001";
-        instructorManagment.createCourse(inst, courseId, "Java Basics", "Intro to Java");
-        instructorManagment.createLesson(inst, courseId, lessonId, "Lesson 1: Variables", "Content here");
-
-        // --- Create Student ---
-        Student student = new Student("S001", "Bob", "bob@example.com", "pass456");
+        // ======= CREATE USERS =======
+        Student student = new Student("S001", "Alice", "alice@example.com", "pass123");
         student.setStudentService(studentService);
-        studentService.addStudent(student); // adds to students.json & users.json
+        studentService.addStudent(student);
 
-        // --- Enroll student in course ---
-        student.enrollCourse(courseId);
+        Instructor instructor = new Instructor("I001", "Bob", "bob@example.com", "pass456");
+        instructor.setInstructorManagment(instructorService);
+        instructorService.addInstructor(instructor, userService);
 
-        // --- Create a Quiz ---
-        Quiz quiz = new Quiz(lessonId, Arrays.asList(1, 2, 3)); // correct answers
+        // ======= CREATE COURSE =======
+        instructorService.createCourse(instructor, "C500", "Programming", "Learn Java Basics");
+        Course course = courseService.getCourseById("C500");
 
-        // --- Student submits the Quiz ---
-        List<Integer> studentAnswers = Arrays.asList(1, 2, 3); // perfect score
-        int score = student.takeQuiz(lessonId, quiz, studentAnswers);
+        System.out.println("Created course: " + course.getTitle());
 
-        System.out.println("Quiz score: " + score);
+        // ======= ADD LESSONS =======
+        Lesson lesson1 = new Lesson("L001", "Variables", "Java Variables content");
+        Lesson lesson2 = new Lesson("L002", "Loops", "Java Loops content");
+        course.addLesson(lesson1);
+        course.addLesson(lesson2);
+        courseService.save();
 
-        // --- Student marks Lesson complete ---
-        boolean completed = student.markLessonCompleted(courseId, lessonId);
-        System.out.println("Lesson completed: " + completed);
+        System.out.println("Added lessons: " + course.getLessonsCount());
 
-        // --- Check Student progress ---
-        System.out.println("Student progress: " + student.getProgress());
+        // ======= ENROLL STUDENT =======
+        studentService.enrollStudentInCourse(student, "C001");
         System.out.println("Student enrolled courses: " + student.getEnrolledCourses());
 
-        // --- Lesson average across all students ---
-        double average = instructorManagment.getLessonAverage(courseId, lessonId);
-        System.out.println("Lesson average: " + average);
+        // ======= CREATE QUIZ =======
+        Quiz quiz = new Quiz("Q001");
+        quiz.addQuestionIdS("Q1");
+        quiz.addQuestionIdS("Q2");
+        quiz.addQuestionIdS("Q3");
+        lesson1.setQuiz(quiz);
 
-        // --- Student course completion percentage ---
-        double completion = instructorManagment.getStudentCourseCompletionPercentage(student.getUserID(), courseId);
+        // ======= SUBMIT QUIZ =======
+        List<Integer> answers = Arrays.asList(1, 0, 1); // student answers
+        int score = studentService.submitQuiz(student, "L001", lesson1.getQuiz(), answers);
+        System.out.println("Quiz score: " + score);
+
+        // ======= MARK LESSON COMPLETED =======
+        boolean completed = studentService.markLessonCompleted(student, "C500", "L001");
+        System.out.println("Lesson completed: " + completed);
+
+        // ======= STUDENT PROGRESS =======
+        System.out.println("Student progress: " + student.getProgress());
+
+        // ======= INSTRUCTOR EDIT COURSE =======
+        System.out.println("\n=== Instructor editing course ===");
+        course.setTitle("Advanced Java Programming");
+        boolean updated = instructorService.updateCourse(instructor, course);
+        System.out.println("Course updated? " + updated);
+        System.out.println("Course new title: " + courseService.getCourseById("C500").getTitle());
+
+        // ======= INSTRUCTOR LESSON AVERAGE =======
+        double avg = instructorService.getLessonAverage("C500", "L001");
+        System.out.println("Lesson average: " + avg);
+
+        // ======= COURSE COMPLETION % =======
+        double completion = instructorService.getStudentCourseCompletionPercentage("S001", "C500");
         System.out.println("Course completion %: " + completion);
+
     }
 }

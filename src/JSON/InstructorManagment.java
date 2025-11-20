@@ -35,6 +35,7 @@ public class InstructorManagment extends JsonDatabaseManager<Instructor> {
         if(done)
         {
             instructor.addCreatedCourse(courseId);
+            save(); 
         } 
         return done;
        

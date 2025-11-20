@@ -1,10 +1,12 @@
 [
   {
-    "createdCourses": [],
+    "createdCourses": [
+      "C500"
+    ],
     "userID": "I001",
-    "password": "Alice",
-    "userName": "alice@example.com",
+    "password": "Bob",
+    "userName": "bob@example.com",
     "role": "Instructor",
-    "email": "password123"
+    "email": "pass456"
   }
 ]

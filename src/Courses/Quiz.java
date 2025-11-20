@@ -4,30 +4,52 @@
  */
 package Courses;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
- * @author USER
+ * @author HP
  */
 public class Quiz {
-    private String lessonId;
-    private List<Integer> correctAnswers;
-
-    public Quiz(String lessonId, List<Integer> correctAnswers) {
-        this.lessonId = lessonId;
-        this.correctAnswers = correctAnswers;
+    private String quizId;
+    private List<String> questionIds;
+    public Quiz(){};
+    public Quiz(String quizId)
+    {
+        this.quizId=quizId;
+        this.questionIds=new ArrayList<>();
     }
-
-    public String getLessonId() {
-        return lessonId;
+    public String getQuizId()
+    {
+        return quizId;
     }
-
-    public List<Integer> getCorrectAnswers() {
-        return correctAnswers;
+    public void setQuizId(String quizId)
+    {
+        this.quizId=quizId;
     }
-
-    public void setCorrectAnswers(List<Integer> correctAnswers) {
-        this.correctAnswers = correctAnswers;
+    public void addQuestionIdS(String id)
+    {
+        questionIds.add(id);
     }
+    public List<String> getQuestionIds()
+    {
+        return questionIds;
+    }
+    @Override
+    public String toString()
+    {
+       return "Quiz(" + quizId + ")Questions: "+questionIds.size();
+    }
+    //to test //// // In Quiz.java
+public List<Integer> getCorrectAnswers() {
+    List<Integer> correct = new ArrayList<>();
+    for (String qId : questionIds) {
+        // For testing, let's assume correct choice is always 1
+        correct.add(1);
+    }
+    return correct;
+}
+
+    
 }

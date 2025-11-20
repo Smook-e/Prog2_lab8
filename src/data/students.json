@@ -5,12 +5,12 @@
     ],
     "progress": {},
     "quizScores": {
-      "L001": 3
+      "L001": 2
     },
     "userID": "S001",
     "password": "student",
-    "userName": "Bob",
-    "role": "bob@example.com",
-    "email": "pass456"
+    "userName": "Alice",
+    "role": "alice@example.com",
+    "email": "pass123"
   }
 ]

@@ -87,7 +87,7 @@
   },
   {
     "courseId": "C001",
-    "title": "Java Basics",
+    "title": "Advanced Java Programming",
     "description": "Intro to Java",
     "instructorId": "I001",
     "lessons": [
@@ -107,6 +107,84 @@
         "lessonId": "L001",
         "title": "Lesson 1: Variables",
         "content": "Content here",
+        "Resources": []
+      },
+      {
+        "lessonId": "L001",
+        "title": "Intro to Java",
+        "content": "Basics of Java.",
+        "Resources": []
+      },
+      {
+        "lessonId": "L001",
+        "title": "Intro to Java",
+        "content": "Basics of Java.",
+        "Resources": []
+      },
+      {
+        "lessonId": "L001",
+        "title": "Variables",
+        "content": "Java Variables content",
+        "Resources": [],
+        "quiz": {
+          "quizId": "Q001",
+          "questionIds": [
+            "Q1",
+            "Q2",
+            "Q3"
+          ]
+        }
+      },
+      {
+        "lessonId": "L002",
+        "title": "Loops",
+        "content": "Java Loops content",
+        "Resources": []
+      }
+    ],
+    "students": [],
+    "status": "pending"
+  },
+  {
+    "courseId": "C001",
+    "title": "Java Programming",
+    "description": "I001",
+    "instructorId": "Basic Java course",
+    "lessons": [
+      {
+        "lessonId": "L001",
+        "title": "Intro to Java",
+        "content": "Basics of Java.",
+        "Resources": []
+      }
+    ],
+    "students": [],
+    "status": "pending"
+  },
+  {
+    "courseId": "C500",
+    "title": "Advanced Java Programming",
+    "description": "Learn Java Basics",
+    "instructorId": "I001",
+    "lessons": [
+      {
+        "lessonId": "L001",
+        "title": "Variables",
+        "content": "Java Variables content",
+        "Resources": [],
+        "quiz": {
+          "quizId": "Q001",
+          "questionIds": [
+            "Q1",
+            "Q2",
+            "Q3"
+          ]
+        }
+      },
+      {
+        "lessonId": "L002",
+        "title": "Loops",
+        "content": "Java Loops content",
         "Resources": []
       }
     ],
