@@ -32,6 +32,7 @@ public class TakeQuiz extends javax.swing.JFrame {
     
     public TakeQuiz(String quizId) {
         initComponents();
+        setLocationRelativeTo(null);
         quizService=new QuizService();
         openQuiz(quizId);    
     }

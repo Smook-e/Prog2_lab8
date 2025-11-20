@@ -29,6 +29,7 @@ public class CreateQuiz extends javax.swing.JFrame {
     private Quiz quiz;
     public CreateQuiz() {
         initComponents();
+        setLocationRelativeTo(null);
         quizService=new QuizService();
     }
 
