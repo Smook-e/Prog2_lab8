@@ -89,7 +89,7 @@ private void setupTable() {
         ));
         jScrollPane1.setViewportView(lessonsTable);
 
-        markCompletedBtn.setText("view completed lessons");
+        markCompletedBtn.setText("mark completed lessons");
         markCompletedBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 markCompletedBtnActionPerformed(evt);

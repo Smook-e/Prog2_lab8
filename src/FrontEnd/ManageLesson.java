@@ -41,7 +41,6 @@ public class ManageLesson extends javax.swing.JFrame {
         }
         jList1.setModel(model);
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -178,7 +177,8 @@ public class ManageLesson extends javax.swing.JFrame {
     }//GEN-LAST:event_button4ActionPerformed
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-        CreateLesson createLesson=new CreateLesson(instructorManagment,instructor,courseId);
+       //instructorManagment,instructorManagment.getCourseService(), instructor
+        CreateLesson createLesson=new CreateLesson(instructorManagment,instructorManagment.getCourseService(),instructor,courseId);
         createLesson.setVisible(true);
         createLesson.setLocationRelativeTo(null);
     }//GEN-LAST:event_button1ActionPerformed
@@ -193,6 +193,7 @@ public class ManageLesson extends javax.swing.JFrame {
       EditLesson e = new EditLesson(instructorManagment,instructor,courseId,selected);
        e.setVisible(true);
        e.setLocationRelativeTo(null);
+       this.dispose();
     }//GEN-LAST:event_button2ActionPerformed
 
     /**

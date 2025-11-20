@@ -26,6 +26,30 @@
         "Resources": []
       }
     ],
+    "students": [
+      "10470"
+    ],
+    "status": "accepted"
+  },
+  {
+    "courseId": "c003",
+    "title": "music",
+    "description": "learn",
+    "instructorId": "10909",
+    "lessons": [
+      {
+        "lessonId": "l001",
+        "title": "note1",
+        "content": "learn",
+        "Resources": []
+      },
+      {
+        "lessonId": "l002",
+        "title": "note2",
+        "content": "learn",
+        "Resources": []
+      }
+    ],
     "students": [],
     "status": "pending"
   }
