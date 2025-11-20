@@ -28,7 +28,7 @@ public class QuizService {
             System.out.print("error intializing json file.");
         }
     }
-    public boolean quizIdExist(String quizId)
+    public boolean quizIdExists(String quizId)
     {
         return quizDb.getDb().stream().anyMatch(q->q.getQuizId().equals(quizId));
     }
@@ -60,11 +60,37 @@ public class QuizService {
         List<Question> questions= new ArrayList<>();
         for(String questionId:quiz.getQuestionIds())
         {
-            questionDb.getDb().stream().filter(q->q.getQuestionId().equals(questionId)).findFirst().ifPresent(questions);
+            questionDb.getDb().stream().filter(q->q.getQuestionId().equals(questionId)).findFirst().ifPresent(questions::add);
         }
+        return questions;
     }
-    
-    
-    
-    
+    public Quiz getQuizById(String quizId)
+    {
+        return quizDb.getDb().stream().filter(p->p.getQuizId().equals(quizId)).findFirst().orElse(null);
+    }
+    public Question getQuestionById(String questionId)
+    {
+        return questionDb.getDb().stream().filter(p->p.getQuestionId().equals(questionId)).findFirst().orElse(null);
+    }
+    public List<Question> takeQuiz(String quizId)
+    {
+        Quiz quiz=getQuizById(quizId);
+        if(quiz==null)
+        { throw new IllegalArgumentException("quiz doesn't exist.");}
+        return getQuestionsOfQuiz(quiz);
+    }
+    public int calculateScore(String quizId,List<Integer> answers)
+    {
+        List<Question> questions=takeQuiz(quizId);
+        int score=0;
+        int i;
+        for(i=0;i<questions.size()&&i<answers.size();i++)
+        {
+            if(questions.get(i).getCorrectChoice()==answers.get(i))
+            {
+                score++;
+            }
+        }
+        return score;
+    }
 }
