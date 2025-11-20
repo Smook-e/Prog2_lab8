@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package JSON;
+package Courses;
 
 import java.util.List;
 
@@ -58,6 +58,6 @@ public class Question {
     @Override
     public String toString()
     {
-        return "Question(" +questionId+ ")"+text;
+        return "Question(" +questionId+ "): "+text;
     }
 }
