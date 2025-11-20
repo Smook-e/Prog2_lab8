@@ -4,6 +4,7 @@ import Users.Student;
 import Courses.Course;
 import Courses.Lesson;
 import Courses.Quiz;
+import Users.User;
 import java.io.IOException;
 
 import java.util.*;
@@ -28,6 +29,7 @@ public class StudentService extends JsonDatabaseManager<Student> {
         }
         student.getEnrolledCourses().add(courseId);
         save(); 
+        courseService.save();
         return true;
     }
 
@@ -102,9 +104,10 @@ public class StudentService extends JsonDatabaseManager<Student> {
         save();  //save students.json
 
         // Also save to users.json
-        userService.addUser(student);
-        userService.save();
-        return true;
+        User user = new User(student.getUserID(), student.getPassword(), student.getUserName(), "Student", student.getEmail());
+    userService.addUser(user); 
+    userService.save(); 
+    return true;
     }
 
 }

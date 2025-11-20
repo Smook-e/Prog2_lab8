@@ -9,6 +9,7 @@ import JSON.StudentService;
 import Courses.Lesson;
 import Users.Instructor;
 import Users.Student;
+import Users.User;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -161,10 +162,11 @@ public boolean addInstructor(Instructor instructor, UserService users) {
         if (db.stream().anyMatch(i -> i.getUserID().equals(instructor.getUserID()))) return false;
         db.add(instructor);
         save();             // save instructors.json
-
-        users.addUser(instructor);  
-        users.save();       // update users.json
-        return true;
+    // Save users.json
+    User user = new User(instructor.getUserID(), instructor.getPassword(), instructor.getUserName(), "Instructor", instructor.getEmail());
+    users.addUser(user);  
+    users.save();  
+    return true;
     }
 
 
