@@ -8,9 +8,9 @@
       "L001": 2
     },
     "userID": "S001",
-    "password": "student",
+    "password": "pass123",
     "userName": "Alice",
-    "role": "alice@example.com",
-    "email": "pass123"
+    "role": "student",
+    "email": "alice@example.com"
   }
 ]

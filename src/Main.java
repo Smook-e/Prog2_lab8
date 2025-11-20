@@ -21,11 +21,11 @@ public class Main {
         InstructorManagment instructorService = new InstructorManagment(courseService, studentService, instructorsFile);
 
         // ======= CREATE USERS =======
-        Student student = new Student("S001", "Alice", "alice@example.com", "pass123");
+        Student student = new Student("S001",  "pass123","Alice", "alice@example.com");
         student.setStudentService(studentService);
         studentService.addStudent(student);
 
-        Instructor instructor = new Instructor("I001", "Bob", "bob@example.com", "pass456");
+        Instructor instructor = new Instructor("I001", "pass456","Bob", "bob@example.com");
         instructor.setInstructorManagment(instructorService);
         instructorService.addInstructor(instructor, userService);
 

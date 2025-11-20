@@ -4,9 +4,9 @@
       "C500"
     ],
     "userID": "I001",
-    "password": "Bob",
-    "userName": "bob@example.com",
+    "password": "pass456",
+    "userName": "Bob",
     "role": "Instructor",
-    "email": "pass456"
+    "email": "bob@example.com"
   }
 ]

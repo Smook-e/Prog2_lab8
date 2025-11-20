@@ -12,8 +12,8 @@ public class Student extends User {
 
   
     private transient StudentService studentService;
-    public Student(String userId, String username, String email, String passwordHash) {
-        super(userId, "student", username, email, passwordHash);
+    public Student(String userId, String passwordHash, String username, String email) {
+        super(userId,passwordHash ,username,"student", email);
         this.enrolledCourses = new ArrayList<>();
         this.progress = new HashMap<>();
         this.quizScores = new HashMap<>();

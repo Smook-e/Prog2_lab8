@@ -1,16 +1,16 @@
 [
   {
     "userID": "S001",
-    "password": "student",
+    "password": "pass123",
     "userName": "Alice",
     "role": "Student",
-    "email": "pass123"
+    "email": "alice@example.com"
   },
   {
     "userID": "I001",
-    "password": "Bob",
-    "userName": "bob@example.com",
+    "password": "pass456",
+    "userName": "Bob",
     "role": "Instructor",
-    "email": "pass456"
+    "email": "bob@example.com"
   }
 ]

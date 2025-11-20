@@ -10,7 +10,7 @@ public class Instructor extends User {
     private transient InstructorManagment instructorManagment;
     public Instructor(String userID,String password,String userName,String email)
     {
-        super( userID,  password,  userName, "Instructor", email);
+        super( userID,  password,  userName,"Instructor", email);
         this.createdCourses=new ArrayList<>();
     }
     public void setInstructorManagment(InstructorManagment instructorManagment)
