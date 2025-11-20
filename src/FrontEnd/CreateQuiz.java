@@ -9,6 +9,8 @@ import Courses.Quiz;
 import JSON.JsonDatabaseManager;
 import JSON.QuizService;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -134,6 +136,11 @@ public class CreateQuiz extends javax.swing.JFrame {
         });
 
         jButton3.setText("Save Quiz");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -243,7 +250,7 @@ public class CreateQuiz extends javax.swing.JFrame {
         String choice4=jTextField6.getText().trim();
         if(choice1.isEmpty()||choice2.isEmpty()||choice3.isEmpty()||choice4.isEmpty())
         {
-            JOptionPane.showMessageDialog(this,"please enter all the choices");
+            JOptionPane.showMessageDialog(this,"please enter all the choices.");
             return;
         }
         int correctChoice=0;
@@ -251,9 +258,33 @@ public class CreateQuiz extends javax.swing.JFrame {
         else if(jRadioButton2.isSelected())correctChoice=2;
         else if(jRadioButton3.isSelected())correctChoice=3;
         else if(jRadioButton4.isSelected())correctChoice=4;
-        
-        
+        if(correctChoice==0)
+        {
+            JOptionPane.showMessageDialog(this,"please select the correct choice.");
+            return;
+        }
+        List<String> choices=new ArrayList<>();
+        choices.add(choice1);
+        choices.add(choice2);
+        choices.add(choice3);
+        choices.add(choice4);
+        quizService.createQuestion(quiz, questionText, choices, correctChoice);
+        JOptionPane.showMessageDialog(this,"Question added successfully.");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jTextField6.setText("");
+        buttonGroup1.clearSelection();    
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       quizService.save();
+       JOptionPane.showMessageDialog(this,"Quiz added successfully.");
+       //return to the panel that has create quiz option
+       this.dispose();
+       
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
