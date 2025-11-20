@@ -1,0 +1,30 @@
+[
+  {
+    "userID": "S001",
+    "password": "pass123",
+    "userName": "Alice",
+    "role": "Student",
+    "email": "alice@example.com"
+  },
+  {
+    "userID": "I001",
+    "password": "pass456",
+    "userName": "Bob",
+    "role": "Instructor",
+    "email": "bob@example.com"
+  },
+  {
+    "userID": "10470",
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+    "userName": "ritage",
+    "role": "Student",
+    "email": "ritage@gmail.com"
+  },
+  {
+    "userID": "10909",
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+    "userName": "sara",
+    "role": "Instructor",
+    "email": "sara@gmail.com"
+  }
+]

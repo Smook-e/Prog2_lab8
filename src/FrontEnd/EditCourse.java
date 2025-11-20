@@ -156,6 +156,7 @@ public class EditCourse extends javax.swing.JFrame {
         }
         InstructorDashboard d=new InstructorDashboard(instructorManagment,instructor);
         d.setVisible(true);
+        d.setLocationRelativeTo(null);
         this.dispose();
         
     }//GEN-LAST:event_jButton1ActionPerformed
