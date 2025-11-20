@@ -1,2 +1,35 @@
-{
-}
+[
+  {
+    "questionId": "Quiz1_Q1",
+    "text": "java is a",
+    "choices": [
+      "programming language",
+      "app",
+      "animal",
+      "operating system"
+    ],
+    "correctChoice": 1
+  },
+  {
+    "questionId": "quiz2_Q1",
+    "text": "cats has",
+    "choices": [
+      "fur",
+      "trunk",
+      "horn",
+      "wings"
+    ],
+    "correctChoice": 0
+  },
+  {
+    "questionId": "quiz2_Q2",
+    "text": "the capital of egypt is",
+    "choices": [
+      "cairo",
+      "paris",
+      "berlin",
+      "rome"
+    ],
+    "correctChoice": 0
+  }
+]

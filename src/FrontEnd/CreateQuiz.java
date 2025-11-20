@@ -253,12 +253,12 @@ public class CreateQuiz extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"please enter all the choices.");
             return;
         }
-        int correctChoice=0;
-        if(jRadioButton1.isSelected())correctChoice=1;
-        else if(jRadioButton2.isSelected())correctChoice=2;
-        else if(jRadioButton3.isSelected())correctChoice=3;
-        else if(jRadioButton4.isSelected())correctChoice=4;
-        if(correctChoice==0)
+        int correctChoice=-1;
+        if(jRadioButton1.isSelected())correctChoice=0;
+        else if(jRadioButton2.isSelected())correctChoice=1;
+        else if(jRadioButton3.isSelected())correctChoice=2;
+        else if(jRadioButton4.isSelected())correctChoice=3;
+        if(correctChoice==-1)
         {
             JOptionPane.showMessageDialog(this,"please select the correct choice.");
             return;
@@ -279,6 +279,37 @@ public class CreateQuiz extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       String questionText=jTextField2.getText().trim();
+        if(questionText.isEmpty())
+        {
+            JOptionPane.showMessageDialog(this,"please enter a question.");
+            return;
+        }
+        String choice1=jTextField3.getText().trim();
+        String choice2=jTextField4.getText().trim();
+        String choice3=jTextField5.getText().trim();
+        String choice4=jTextField6.getText().trim();
+        if(choice1.isEmpty()||choice2.isEmpty()||choice3.isEmpty()||choice4.isEmpty())
+        {
+            JOptionPane.showMessageDialog(this,"please enter all the choices.");
+            return;
+        }
+        int correctChoice=-1;
+        if(jRadioButton1.isSelected())correctChoice=0;
+        else if(jRadioButton2.isSelected())correctChoice=1;
+        else if(jRadioButton3.isSelected())correctChoice=2;
+        else if(jRadioButton4.isSelected())correctChoice=3;
+        if(correctChoice==-1)
+        {
+            JOptionPane.showMessageDialog(this,"please select the correct choice.");
+            return;
+        }
+        List<String> choices=new ArrayList<>();
+        choices.add(choice1);
+        choices.add(choice2);
+        choices.add(choice3);
+        choices.add(choice4);
+        quizService.createQuestion(quiz, questionText, choices, correctChoice); 
        quizService.save();
        JOptionPane.showMessageDialog(this,"Quiz added successfully.");
        //return to the panel that has create quiz option

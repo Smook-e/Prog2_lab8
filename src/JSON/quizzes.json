@@ -1,2 +1,15 @@
-{
-}
+[
+  {
+    "quizId": "Quiz1",
+    "questionIds": [
+      "Quiz1_Q1"
+    ]
+  },
+  {
+    "quizId": "quiz2",
+    "questionIds": [
+      "quiz2_Q1",
+      "quiz2_Q2"
+    ]
+  }
+]
