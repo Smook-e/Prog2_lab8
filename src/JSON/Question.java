@@ -23,5 +23,41 @@ public class Question {
         this.text=text;
         this.correctChoice=correctChoice;
     }
-    
+    public String getQuestionId()
+    {
+        return questionId;
+    }
+    public String getText()
+    {
+        return text;
+    }
+    public List<String> getChoices()
+    {
+        return choices;
+    }
+    public int getCorrectChoice()
+    {
+        return correctChoice;
+    }
+    public void setQuestionId(String questionId)
+    {
+        this.questionId=questionId;
+    }
+    public void setText(String text)
+    {
+        this.text=text;
+    }
+    public void setChoices(List<String> choices)
+    {
+        this.choices=choices;
+    }
+    public void setCorrectChoice(int correctChoice)
+    {
+        this.correctChoice=correctChoice;
+    }
+    @Override
+    public String toString()
+    {
+        return "Question(" +questionId+ ")"+text;
+    }
 }
