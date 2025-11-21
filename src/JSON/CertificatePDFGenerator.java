@@ -10,13 +10,14 @@ import Users.User;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import java.io.FileOutputStream;
+import javax.swing.text.Document;
 
 public class CertificatePDFGenerator {
 
     public static void generate(Certificate cert, User student, Course course) {
 
         try {
-            Document doc = new Document();
+            Document doc = new Document() {};
             PdfWriter.getInstance(doc, new FileOutputStream(cert.getCertificateId() + ".pdf"));
             doc.open();         
             Font titleFont = new Font(Font.FontFamily.TIMES_ROMAN, 28, Font.BOLD);

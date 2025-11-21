@@ -49,7 +49,6 @@ public class StudentService extends JsonDatabaseManager<Student> {
          return c.getLessons();  
     }
    public boolean markLessonCompleted(Student student, String courseId, String lessonId) {
-    // Check the student score
     Integer score = student.getQuizScores().get(lessonId);
     if (score == null || score <Student.PASSING_SCORE ) {
         return false;
@@ -57,31 +56,27 @@ public class StudentService extends JsonDatabaseManager<Student> {
     student.getProgress().putIfAbsent(courseId, new ArrayList<>());
     if (!student.getProgress().get(courseId).contains(lessonId)) {
         student.getProgress().get(courseId).add(lessonId);
-          save();// save students.json  
+          save();
         return true;
     }
     return false;
 }
 
     
-    public int submitQuiz(Student student, String lessonId, Quiz quiz, List<Integer> studentAnswers) {
-
+  public int submitQuiz(Student student, String lessonId, QuizService quizService, List<Integer> studentAnswers) {
     if (student.getQuizScores().containsKey(lessonId)) {
-        return -1;  // quiz already taken
+        return -1;  
     }
-    int score = 0;
-    //method get correct answers
-    for (int i = 0; i < quiz.getCorrectAnswers().size(); i++) {
-        if (studentAnswers.get(i) == quiz.getCorrectAnswers().get(i)) {
-            score++;
-        }
+    Quiz quiz = quizService.getQuizById(lessonId);
+    if (quiz == null) {
+        return -2; 
     }
-
+    int score = quizService.calculateScore(lessonId, studentAnswers);
     student.getQuizScores().put(lessonId, score);
-    save();
-
-    return score; 
+    save();  
+    return score;
 }
+
 
     public Student getStudentById(String studentId) {
     for(Student s : db) {
