@@ -20,7 +20,7 @@ public class ViewCertificate extends javax.swing.JPanel {
      */
     public ViewCertificate(Student s) {
         initComponents();
-         loadCertificatesTable(s.getCertificates());
+        loadCertificatesTable(s.getCertificates());
     }
     public void loadCertificatesTable(ArrayList<Certificate> certs) {
     DefaultTableModel model = (DefaultTableModel) certificateTable.getModel();
