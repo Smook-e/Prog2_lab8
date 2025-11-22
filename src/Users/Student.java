@@ -1,18 +1,24 @@
 package Users;
 
+import Courses.Certificate;
 import java.util.*;
 import JSON.StudentService;
 
 public class Student extends User {
     private List<String> enrolledCourses;              
     private Map<String, List<String>> progress;         
-
+    private ArrayList<Certificate> certificates;
     // If save the student to JSON, this field will be ignored.
     private transient StudentService studentService;
     public Student(String userId, String username, String email, String passwordHash) {
         super(userId, "student", username, email, passwordHash);
         this.enrolledCourses = new ArrayList<>();
         this.progress = new HashMap<>();
+        this.certificates = new ArrayList<>();
+    }
+
+    public ArrayList<Certificate> getCertificates() {
+        return certificates;
     }
     public void setStudentService(StudentService service) {
         this.studentService = service;
