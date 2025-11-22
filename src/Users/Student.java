@@ -1,5 +1,6 @@
 package Users;
 
+import Courses.Certificate;
 import Courses.Quiz;
 import java.util.*;
 import JSON.StudentService;
@@ -8,6 +9,7 @@ public class Student extends User {
     private List<String> enrolledCourses;              
     private Map<String, List<String>> progress;         
     private Map<String, Integer> quizScores;
+    private ArrayList<Certificate> certificates;
     public static final int PASSING_SCORE = 50; 
 
   
@@ -17,7 +19,11 @@ public class Student extends User {
         this.enrolledCourses = new ArrayList<>();
         this.progress = new HashMap<>();
         this.quizScores = new HashMap<>();
+        this.certificates = new ArrayList<>();
+    }
 
+    public ArrayList<Certificate> getCertificates() {
+        return certificates;
     }
     public void setStudentService(StudentService service) {
         this.studentService = service;
