@@ -17,8 +17,7 @@ public class CertificateService extends JsonDatabaseManager<User> {
         String date = java.time.LocalDate.now().toString();
 
         Certificate cert = new Certificate(certId, student.getUserID(), course.getCourseId(), date);
-        if(SearchStudent(student.getUserID()) == -1)
-        {
+        if (SearchStudent(student.getUserID()) == -1) {
             return null;
         }
         student.getCertificates().add(cert);
@@ -29,13 +28,31 @@ public class CertificateService extends JsonDatabaseManager<User> {
     }
 
     public int SearchStudent(String id) {
-        int i=0;
-        for(User u : db) {
-            if(u.getUserID().equals(id)) {
-                return i;
+        int i = 0;
+        for (User u : db) {
+            if (u instanceof Student) {
+                if (u.getUserID().equals(id)) {
+                    return i;
+                }
+                i++;
             }
-            i++;
+
         }
         return -1;
     }
+
+    public Certificate getCertificateById(String certId) {
+        for (User u : db) {
+            if (u instanceof Student) {
+                Student s = (Student) u;
+                for (Certificate c : s.getCertificates()) {
+                    if (c.getCertificateId().equals(certId)) {
+                        return c;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
 }

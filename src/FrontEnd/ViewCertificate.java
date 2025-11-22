@@ -5,8 +5,12 @@
 package FrontEnd;
 
 import Courses.Certificate;
+import JSON.CertificatePDFGenerator;
+import JSON.CertificateService;
+import JSON.CourseService;
 import Users.Student;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -14,26 +18,31 @@ import javax.swing.table.DefaultTableModel;
  * @author Mega Store
  */
 public class ViewCertificate extends javax.swing.JPanel {
-
+    private Student s;
+    private CourseService cs;
+    private CertificateService certServ;
     /**
      * Creates new form ViewCertificate
      */
-    public ViewCertificate(Student s) {
+    public ViewCertificate(Student s,CourseService cs,CertificateService certServ) {
+        this.s = s;
+        this.cs = cs;
+        this.certServ = certServ;
         initComponents();
         loadCertificatesTable(s.getCertificates());
     }
-    public void loadCertificatesTable(ArrayList<Certificate> certs) {
-    DefaultTableModel model = (DefaultTableModel) certificateTable.getModel();
-    model.setRowCount(0);
-    for (Certificate c : certs) {
-        model.addRow(new Object[]{
-            c.getCertificateId(),
-            c.getCourseId(),
-            c.getIssueDate()
-        });
-    }
-}
 
+    public void loadCertificatesTable(ArrayList<Certificate> certs) {
+        DefaultTableModel model = (DefaultTableModel) certificateTable.getModel();
+        model.setRowCount(0);
+        for (Certificate c : certs) {
+            model.addRow(new Object[]{
+                c.getCertificateId(),
+                c.getCourseId(),
+                c.getIssueDate()
+            });
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,6 +61,7 @@ public class ViewCertificate extends javax.swing.JPanel {
         menu4 = new java.awt.Menu();
         jScrollPane1 = new javax.swing.JScrollPane();
         certificateTable = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         menu1.setLabel("File");
         menuBar1.add(menu1);
@@ -87,27 +97,52 @@ public class ViewCertificate extends javax.swing.JPanel {
         certificateTable.setName("certificateTable"); // NOI18N
         jScrollPane1.setViewportView(certificateTable);
 
+        jButton1.setText("Download");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 694, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 694, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int selectedRow = certificateTable.getSelectedRow();
+
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a certificate first!");
+            return;
+        }
+        String certId = certificateTable.getValueAt(selectedRow, 0).toString();
+        String courseId = certificateTable.getValueAt(selectedRow, 1).toString();
+        String issueDate = certificateTable.getValueAt(selectedRow, 2).toString();
+        CertificatePDFGenerator.generate(certServ.getCertificateById(certId), s, cs.getCourseById(courseId));
+        JOptionPane.showMessageDialog(null, "Certificate generated!");
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable certificateTable;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private java.awt.Menu menu1;
     private java.awt.Menu menu2;
