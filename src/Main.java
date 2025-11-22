@@ -1,4 +1,3 @@
-
 import Courses.Certificate;
 import FrontEnd.BrowseEnrollCourses;
 
@@ -29,4 +28,3 @@ public class Main {
         c1.generate(cert,student,course);
     }
 }
-

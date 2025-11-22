@@ -74,6 +74,7 @@ public class UserService extends JsonDatabaseManager<User> {
             return false;
         }
         db.add(user);
+         save(); //save after adding
         return true;
     }
 }

@@ -1,0 +1,68 @@
+[
+  {
+    "questionId": "Quiz1_Q1",
+    "text": "java is a",
+    "choices": [
+      "programming language",
+      "app",
+      "animal",
+      "operating system"
+    ],
+    "correctChoice": 1
+  },
+  {
+    "questionId": "quiz2_Q1",
+    "text": "cats has",
+    "choices": [
+      "fur",
+      "trunk",
+      "horn",
+      "wings"
+    ],
+    "correctChoice": 0
+  },
+  {
+    "questionId": "quiz2_Q2",
+    "text": "the capital of egypt is",
+    "choices": [
+      "cairo",
+      "paris",
+      "berlin",
+      "rome"
+    ],
+    "correctChoice": 0
+  },
+  {
+    "questionId": "quiz3_Q1",
+    "text": "love is",
+    "choices": [
+      "care",
+      "hurt",
+      "abuse",
+      "dump"
+    ],
+    "correctChoice": 0
+  },
+  {
+    "questionId": "quiz3_Q2",
+    "text": "dogs are",
+    "choices": [
+      "birds",
+      "animals",
+      "objects",
+      "reptiles"
+    ],
+    "correctChoice": 1
+  },
+  {
+    "questionId": "quiz3_Q3",
+    "text": "century is",
+    "choices": [
+      "10 years",
+      "1 year",
+      "100 years",
+      "9 years"
+    ],
+    "correctChoice": 2
+  }
+]

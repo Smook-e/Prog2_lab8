@@ -1,0 +1,56 @@
+[
+  {
+    "courseId": "C500",
+    "title": "Advanced Java Programming",
+    "description": "Learn Java Basics",
+    "instructorId": "I001",
+    "lessons": [
+      {
+        "lessonId": "L001",
+        "title": "Variables",
+        "content": "Java Variables content",
+        "Resources": [],
+        "quiz": {
+          "quizId": "Q001",
+          "questionIds": [
+            "Q1",
+            "Q2",
+            "Q3"
+          ]
+        }
+      },
+      {
+        "lessonId": "L002",
+        "title": "Loops",
+        "content": "Java Loops content",
+        "Resources": []
+      }
+    ],
+    "students": [
+      "10470"
+    ],
+    "status": "accepted"
+  },
+  {
+    "courseId": "c003",
+    "title": "music",
+    "description": "learn",
+    "instructorId": "10909",
+    "lessons": [
+      {
+        "lessonId": "l001",
+        "title": "note1",
+        "content": "learn",
+        "Resources": []
+      },
+      {
+        "lessonId": "l002",
+        "title": "note2",
+        "content": "learn",
+        "Resources": []
+      }
+    ],
+    "students": [],
+    "status": "pending"
+  }
+]

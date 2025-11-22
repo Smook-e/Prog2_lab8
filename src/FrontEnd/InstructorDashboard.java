@@ -188,6 +188,7 @@ public class InstructorDashboard extends javax.swing.JFrame {
         CreateCourse createCourse = new CreateCourse(instructorManagment,instructorManagment.getCourseService(), instructor);
         createCourse.setVisible(true);
         createCourse.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_button1ActionPerformed
 
     private void button6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button6ActionPerformed
@@ -231,6 +232,7 @@ public class InstructorDashboard extends javax.swing.JFrame {
        EditCourse e = new EditCourse(instructorManagment,instructor,selected);
          e.setLocationRelativeTo(null);
          e.setVisible(true);
+         this.dispose();
     }//GEN-LAST:event_button2ActionPerformed
 
     private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
@@ -243,6 +245,7 @@ public class InstructorDashboard extends javax.swing.JFrame {
         ManageLesson manageLesson= new ManageLesson(instructorManagment,instructor,jList1.getSelectedValue());
         manageLesson.setVisible(true);
         manageLesson.setLocationRelativeTo(null);
+        this.dispose(); 
     }//GEN-LAST:event_button4ActionPerformed
 
     private void button5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button5ActionPerformed
@@ -255,6 +258,7 @@ public class InstructorDashboard extends javax.swing.JFrame {
        ViewStudentsProgress v = new ViewStudentsProgress(instructorManagment,instructor,instructorManagment.getCourseService(),instructorManagment.getStudentService(),selected);
         v.setVisible(true);
         v.setLocationRelativeTo(null);
+          this.dispose(); 
     }//GEN-LAST:event_button5ActionPerformed
 
     /**

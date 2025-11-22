@@ -7,6 +7,7 @@ public class Lesson {
     private String title;
     private String content;
     private ArrayList<String> Resources;
+    private Quiz quiz;/////
 
 
     public Lesson(String lessonId, String title, String content) {
@@ -55,4 +56,13 @@ public class Lesson {
                 ", resources=" + Resources +
                 '}';
       }
+    //..to test///// // ====== QUIZ GETTER/SETTER ======
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+    }
+
 }
