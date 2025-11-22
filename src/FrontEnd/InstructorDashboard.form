@@ -73,9 +73,8 @@
                   </Group>
                   <Component id="scrollPane1" min="-2" pref="191" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+              <EmptySpace pref="25" max="32767" attributes="0"/>
               <Component id="button6" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="18" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

@@ -1,11 +1,17 @@
 [
   {
     "enrolledCourses": [
-      "C001"
+      "C001",
+      "C003"
     ],
-    "progress": {},
+    "progress": {
+      "C003": [
+        "L001"
+      ]
+    },
     "quizScores": {
-      "L001": 2
+      "L001": 10,
+      "L002": 10
     },
     "userID": "S001",
     "password": "pass123",
@@ -15,10 +21,37 @@
   },
   {
     "enrolledCourses": [
-      "C500"
+      "C003"
     ],
-    "progress": {},
-    "quizScores": {},
+    "progress": {
+      "C003": [
+        "L001",
+        "L002"
+      ]
+    },
+    "quizScores": {
+      "L001": 9,
+      "L002": 8
+    },
+    "userID": "S002",
+    "password": "pass456",
+    "userName": "Bob",
+    "role": "student",
+    "email": "bob@example.com"
+  },
+  {
+    "enrolledCourses": [
+      "C001"
+    ],
+    "progress": {
+      "C001": [
+        "L1"
+      ]
+    },
+    "quizScores": {
+      "L1": 7,
+      "L2": 8
+    },
     "userID": "10470",
     "password": "ritage",
     "userName": "ritage@gmail.com",

@@ -1,21 +1,26 @@
 [
   {
     "createdCourses": [
-      "C500"
+      "C003"
     ],
     "userID": "I001",
-    "password": "pass456",
-    "userName": "Bob",
+    "password": "123",
+    "userName": "Sara",
     "role": "Instructor",
-    "email": "bob@example.com"
+    "email": "sara@example.com"
   },
   {
     "createdCourses": [
-      "c400",
-      "c400",
-      "c500",
-      "c003"
+      "c001"
     ],
+    "userID": "10832",
+    "password": "sara123",
+    "userName": "sara@gmail.com",
+    "role": "Instructor",
+    "email": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3"
+  },
+  {
+    "createdCourses": [],
     "userID": "10909",
     "password": "sara",
     "userName": "sara@gmail.com",

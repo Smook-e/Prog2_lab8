@@ -146,14 +146,18 @@ private void setupTable() {
 
     String lessonId = lessonsTable.getValueAt(row, 0).toString();
 
-    boolean ok = student.markLessonCompleted(courseId, lessonId);
+    Boolean ok = student.markLessonCompleted(courseId, lessonId);
 
-    if (ok) {
-        JOptionPane.showMessageDialog(this, "Lesson marked completed!");
-        loadLessons(); // refresh display
-    } else {
-        JOptionPane.showMessageDialog(this, "Already completed.");
-    }
+   if (ok == null) {
+    return; 
+}
+
+if (ok) {
+    JOptionPane.showMessageDialog(this, "Lesson marked completed!");
+    loadLessons();
+} else {
+    JOptionPane.showMessageDialog(this, "Already completed.");
+}
     }//GEN-LAST:event_markCompletedBtnActionPerformed
 
 
