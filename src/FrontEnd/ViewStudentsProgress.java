@@ -20,6 +20,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.plot.PlotOrientation;
 
 /**
  *
@@ -53,26 +54,24 @@ public class ViewStudentsProgress extends javax.swing.JFrame {
     });
         studentProgress();
     }
-    private void studentProgress()
-    {   
-        DefaultTableModel model=(DefaultTableModel)jTable1.getModel();
-        model.setRowCount(0);
-        ArrayList<String> students=courseService.getEnrolledStudents(courseId);
-        model.addColumn("ID");
-        model.addColumn("Name");
-        model.addColumn("Completed Lessons");
-        for(String studentId : students)
-        {   
-           Student student= studentService.getStudentById(studentId);
-           if(student!=null)
-           {
-               List<String> completedLessons=student.getProgress().getOrDefault(courseId, new ArrayList<>());
-               int lessonsCount=completedLessons.size();
-               model.addRow(new Object[]{student.getUserID(),student.getUserName(),lessonsCount});
-           }
+  
+    private void studentProgress() {   
+    DefaultTableModel model = new DefaultTableModel();
+    model.setColumnIdentifiers(new String[] { "ID", "Name", "Completion (%)" });
+
+    ArrayList<String> students = courseService.getEnrolledStudents(courseId);
+
+    for (String studentId : students) {   
+        Student student = studentService.getStudentById(studentId);
+        if (student != null) {
+            double completion = instructorManagment.getStudentCourseCompletionPercentage(studentId, courseId);
+            model.addRow(new Object[]{ student.getUserID(), student.getUserName(), String.format("%.1f%%", completion) });
         }
-        
     }
+
+    jTable1.setModel(model); // set the updated model
+}
+
     
 
     /**
@@ -188,30 +187,32 @@ public class ViewStudentsProgress extends javax.swing.JFrame {
 
     DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-    // Build dataset from your table
-    for (int i = 0; i < rowCount; i++) {
-        String studentName = jTable1.getValueAt(i, 1).toString();   // Column: Name
-        int completed = Integer.parseInt(jTable1.getValueAt(i, 2).toString()); // Column: Completed Lessons
+   for (int i = 0; i < rowCount; i++) {
+    String studentName = jTable1.getValueAt(i, 1).toString();
+    String val = jTable1.getValueAt(i, 2).toString().replace("%", "");
+    double completedPercent = Double.parseDouble(val);
 
-        dataset.addValue(completed, "Completed Lessons", studentName);
-    }
+    dataset.addValue(completedPercent, "Completion %", studentName);
+}
 
-    // Create bar chart
-    JFreeChart chart = ChartFactory.createBarChart(
-            "Progress for Course: " + courseId,
-            "Student",
-            "Completed Lessons",
-            dataset
-    );
+JFreeChart chart = ChartFactory.createBarChart(
+        "Progress for Course: " + courseId,
+        "Student",        // Category axis (vertical)
+        "Completion (%)", // Value axis (horizontal)
+        dataset,
+        PlotOrientation.HORIZONTAL, // Horizontal bars
+        true,
+        true,
+        false
+);
 
-    // Display chart in new window
-    ChartPanel panel = new ChartPanel(chart);
-    JFrame frame = new JFrame("Student Progress Chart");
-    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    frame.setSize(800, 600);
-    frame.add(panel);
-    frame.setLocationRelativeTo(null);
-    frame.setVisible(true);
+ChartPanel panel = new ChartPanel(chart);
+JFrame frame = new JFrame("Student Progress Chart");
+frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+frame.setSize(800, 600);
+frame.add(panel);
+frame.setLocationRelativeTo(null);
+frame.setVisible(true);
 }                                             
 
 
