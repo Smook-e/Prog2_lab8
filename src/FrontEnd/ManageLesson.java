@@ -5,43 +5,60 @@
 package FrontEnd;
 
 import Courses.Lesson;
+import static FrontEnd.SignInApp.studentService;
 import JSON.InstructorManagment;
 import Users.Instructor;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
  * @author HP
  */
 public class ManageLesson extends javax.swing.JFrame {
-
-    /**
-     * Creates new form ManageLesson
-     */
-    private InstructorManagment instructorManagment;
+private InstructorManagment instructorManagment;
     private Instructor instructor;
     private String courseId;
-    public ManageLesson(InstructorManagment instructorManagment,Instructor instructor,String courseId) {
-        
-        this.instructorManagment=instructorManagment;
-        this.instructor=instructor;
-        this.courseId=courseId;
+
+    private javax.swing.JComboBox<String> jComboBoxLessons; // comboBox for lesson selection
+   
+    public ManageLesson(InstructorManagment instructorManagment, Instructor instructor, String courseId) {
+        this.instructorManagment = instructorManagment;
+        this.instructor = instructor;
+        this.courseId = courseId;
+  jComboBoxLessons = new javax.swing.JComboBox<>();
+jComboBoxLessons.setFont(new java.awt.Font("Dialog", 0, 14));
+getContentPane().add(jComboBoxLessons); 
         initComponents();
-        lessonList();
+        lessonList(); // populate lessons list
+        populateComboBox(); // populate lessons in comboBox
+       
     }
-    private void lessonList()
-    {
-        DefaultListModel<String> model= new DefaultListModel<>();
-        List<Lesson>lessons=instructorManagment.getCourseService().getLessons(courseId);
-        for(Lesson lesson:lessons)
-        {
+
+    private void lessonList() {
+        DefaultListModel<String> model = new DefaultListModel<>();
+        List<Lesson> lessons = instructorManagment.getCourseService().getLessons(courseId);
+        for (Lesson lesson : lessons) {
             model.addElement(lesson.getLessonId());
         }
         jList1.setModel(model);
     }
 
+    private void populateComboBox() {
+        jComboBoxLessons.removeAllItems();
+        List<Lesson> lessons = instructorManagment.getCourseService().getLessons(courseId);
+        for (Lesson lesson : lessons) {
+            jComboBoxLessons.addItem(lesson.getLessonId() + " - " + lesson.getTitle());
+        }
+    }
+    /**
+     * Creates new form ManageLesson
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,11 +71,12 @@ public class ManageLesson extends javax.swing.JFrame {
         label1 = new java.awt.Label();
         button1 = new java.awt.Button();
         button2 = new java.awt.Button();
-        button3 = new java.awt.Button();
         scrollPane1 = new java.awt.ScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
         button4 = new java.awt.Button();
+        quizAverageBtn = new java.awt.Button();
+        button6 = new java.awt.Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -81,14 +99,6 @@ public class ManageLesson extends javax.swing.JFrame {
             }
         });
 
-        button3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        button3.setLabel("Delete Lesson");
-        button3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button3ActionPerformed(evt);
-            }
-        });
-
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -105,6 +115,23 @@ public class ManageLesson extends javax.swing.JFrame {
             }
         });
 
+        quizAverageBtn.setActionCommand("View Average");
+        quizAverageBtn.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        quizAverageBtn.setLabel("Delete Lesson");
+        quizAverageBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quizAverageBtnActionPerformed(evt);
+            }
+        });
+
+        button6.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        button6.setLabel("Delete Lesson");
+        button6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button6ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -116,7 +143,8 @@ public class ManageLesson extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(button1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(button2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(button3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(quizAverageBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(button6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(52, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -137,10 +165,12 @@ public class ManageLesson extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(quizAverageBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(scrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -149,25 +179,6 @@ public class ManageLesson extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
-        String selected=jList1.getSelectedValue();
-         if(selected==null)
-       {
-           JOptionPane.showMessageDialog(this,"Select a lesson.");
-           return;
-       }
-       boolean done=instructorManagment.deleteLesson(instructor, courseId, selected);
-       if(done)
-       {
-           JOptionPane.showMessageDialog(this,"Lesson deleted successfully.");
-           lessonList();
-       }
-       else
-       {
-           JOptionPane.showMessageDialog(this,"Failed to delete lesson!");
-       }
-    }//GEN-LAST:event_button3ActionPerformed
 
     private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
         InstructorDashboard d=new InstructorDashboard(instructorManagment,instructor);
@@ -197,6 +208,40 @@ public class ManageLesson extends javax.swing.JFrame {
        this.dispose();
     }//GEN-LAST:event_button2ActionPerformed
 
+    private void quizAverageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quizAverageBtnActionPerformed
+        // TODO add your handling code here:
+        String selected = (String) jComboBoxLessons.getSelectedItem();
+        if (selected == null) {
+            JOptionPane.showMessageDialog(this, "Select a lesson first!");
+            return;
+        }
+
+        String lessonId = selected.split(" - ")[0];
+        double average = instructorManagment.getLessonAverage(courseId, lessonId); // fixed
+
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        dataset.addValue(average, "Average Score", lessonId);
+
+        JFreeChart chart = ChartFactory.createBarChart(
+                "Quiz Average for Lesson: " + lessonId,
+                "Lesson",
+                "Average Score",
+                dataset
+        );
+
+        ChartPanel panel = new ChartPanel(chart);
+        JFrame frame = new JFrame("Quiz Average");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(600, 400);
+        frame.add(panel);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }//GEN-LAST:event_quizAverageBtnActionPerformed
+
+    private void button6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -205,11 +250,12 @@ public class ManageLesson extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button button1;
     private java.awt.Button button2;
-    private java.awt.Button button3;
     private java.awt.Button button4;
+    private java.awt.Button button6;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private java.awt.Label label1;
+    private java.awt.Button quizAverageBtn;
     private java.awt.ScrollPane scrollPane1;
     // End of variables declaration//GEN-END:variables
 }

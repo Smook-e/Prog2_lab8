@@ -47,5 +47,48 @@
       "10470"
     ],
     "status": "accepted"
+<<<<<<< HEAD:src/data/courses.json
+=======
+  },
+  {
+    "courseId": "c003",
+    "title": "music",
+    "description": "learn",
+    "instructorId": "10909",
+    "lessons": [
+      {
+        "lessonId": "l001",
+        "title": "note1",
+        "content": "learn",
+        "Resources": []
+      },
+      {
+        "lessonId": "l002",
+        "title": "note2",
+        "content": "learn",
+        "Resources": []
+      },
+      {
+        "lessonId": "l003",
+        "title": "note3",
+        "content": "learn",
+        "Resources": []
+      },
+      {
+        "lessonId": "l004",
+        "title": "note5",
+        "content": "learn",
+        "Resources": []
+      },
+      {
+        "lessonId": "L005",
+        "title": "note5",
+        "content": "learn",
+        "Resources": []
+      }
+    ],
+    "students": [],
+    "status": "pending"
+>>>>>>> e93a392d240c48b29b3f41c22748bfbf4a3b5219:src/JSON/courses.json
   }
 ]
