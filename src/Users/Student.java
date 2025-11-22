@@ -40,13 +40,13 @@ public class Student extends User {
     public List<Courses.Lesson> viewLessons(String courseId) {
         return studentService.getLessonsForCourse(courseId);
     }
-    public boolean markLessonCompleted(String courseId, String lessonId) {
+    public Boolean markLessonCompleted(String courseId, String lessonId) {
         return studentService.markLessonCompleted(this, courseId, lessonId);
     }
 //class Quiz
-    public int takeQuiz(String lessonId, Quiz quiz, List<Integer> answers) {
-    return studentService.submitQuiz(this, lessonId, quiz, answers);
-}
+   // public int takeQuiz(String lessonId, Quiz quiz, List<Integer> answers) {
+   // return studentService.submitQuiz(this, lessonId, quiz, answers);
+//}
 
     public List<String> getEnrolledCourses() {
         return enrolledCourses;

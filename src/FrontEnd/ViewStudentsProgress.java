@@ -3,6 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package FrontEnd;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 import Courses.Course;
 import Courses.Lesson;
@@ -13,6 +17,8 @@ import Users.Instructor;
 import Users.Student;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -37,7 +43,14 @@ public class ViewStudentsProgress extends javax.swing.JFrame {
         this.courseId=courseId;
         this.instructorManagment= instructorManagment;
         this.instructor =instructor;
-        initComponents();
+ initComponents();  
+
+    jButton2.setText("View Chart");
+    jButton2.addActionListener(new java.awt.event.ActionListener() {
+     public void actionPerformed(java.awt.event.ActionEvent evt) {
+            viewChartBtnActionPerformed(evt);
+        }
+    });
         studentProgress();
     }
     private void studentProgress()
@@ -76,6 +89,7 @@ public class ViewStudentsProgress extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -105,6 +119,14 @@ public class ViewStudentsProgress extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton2.setText("view chart");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -118,6 +140,8 @@ public class ViewStudentsProgress extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton1))
                     .addComponent(scrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -130,7 +154,9 @@ public class ViewStudentsProgress extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(scrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -140,16 +166,58 @@ public class ViewStudentsProgress extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         InstructorDashboard d=new InstructorDashboard(instructorManagment,instructor);
         d.setVisible(true);
+         d.setLocationRelativeTo(null);
         this.dispose();
+        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+         viewChartBtnActionPerformed(evt);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
+    private void viewChartBtnActionPerformed(java.awt.event.ActionEvent evt) {                                             
+    int rowCount = jTable1.getRowCount();
+    if (rowCount == 0) {
+        JOptionPane.showMessageDialog(this, "No student progress to display!");
+        return;
+    }
+
+    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+    // Build dataset from your table
+    for (int i = 0; i < rowCount; i++) {
+        String studentName = jTable1.getValueAt(i, 1).toString();   // Column: Name
+        int completed = Integer.parseInt(jTable1.getValueAt(i, 2).toString()); // Column: Completed Lessons
+
+        dataset.addValue(completed, "Completed Lessons", studentName);
+    }
+
+    // Create bar chart
+    JFreeChart chart = ChartFactory.createBarChart(
+            "Progress for Course: " + courseId,
+            "Student",
+            "Completed Lessons",
+            dataset
+    );
+
+    // Display chart in new window
+    ChartPanel panel = new ChartPanel(chart);
+    JFrame frame = new JFrame("Student Progress Chart");
+    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    frame.setSize(800, 600);
+    frame.add(panel);
+    frame.setLocationRelativeTo(null);
+    frame.setVisible(true);
+}                                             
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
