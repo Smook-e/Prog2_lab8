@@ -21,10 +21,10 @@ public class CertificateService extends JsonDatabaseManager<User> {
         {
             return null;
         }
-        //student.getCertificates().add(cert); // i need this method in Student
+        student.getCertificates().add(cert);
         db.add(SearchStudent(student.getUserID()), student);
         save();
-        // CertificatePDFGenerator.generate(cert, student, course);
+        CertificatePDFGenerator.generate(cert, student, course);
         return cert;
     }
 
