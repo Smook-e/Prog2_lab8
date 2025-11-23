@@ -105,7 +105,7 @@ private void setupTable() {
             }
         });
 
-        jButton1.setText("view quizzes");
+        jButton1.setText("Take Quiz");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -118,7 +118,7 @@ private void setupTable() {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(134, Short.MAX_VALUE)
+                .addContainerGap(148, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton1)
@@ -178,11 +178,10 @@ private void setupTable() {
            return;
        }
        String lessonId = lessonsTable.getValueAt(row, 0).toString();
-       QuizList quizList= new QuizList(student,studentService,courseService,courseId,lessonId,this);
-       quizList.setVisible(true);
-       quizList.setLocationRelativeTo(null);
-       getWindowAncestor(this).setVisible(false);
-       
+       TakeQuiz takeQuiz = new TakeQuiz(courseService.getLessonById(courseId, lessonId).getQuiz().getQuizId(),this);
+       takeQuiz.setVisible(true);
+       takeQuiz.setLocationRelativeTo(null);
+       getWindowAncestor(this).setVisible(false);  
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

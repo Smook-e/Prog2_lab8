@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import static javax.swing.SwingUtilities.getWindowAncestor;
 
 /**
  *
@@ -29,10 +30,12 @@ public class TakeQuiz extends javax.swing.JFrame {
     private List<Integer> answers;
     private int questionIndex=0;
     private boolean feedbackCheck=false;
+    private LessonManagement lessonManagement;
     
-    public TakeQuiz(String quizId) {
+    public TakeQuiz(String quizId,LessonManagement lessonManagement) {
         initComponents();
         setLocationRelativeTo(null);
+        this.lessonManagement=lessonManagement;
         quizService=new QuizService();
         openQuiz(quizId);    
     }
@@ -234,6 +237,7 @@ public class TakeQuiz extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Quiz Completed! Score:"+score+"/"+questions.size());
             //open the frame that called it 
             this.dispose();
+            getWindowAncestor(lessonManagement).setVisible(true);
         }
            return; 
         }
