@@ -52,10 +52,22 @@
       "L1": 7
     },
     "userID": "10470",
-    "password":"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
-    "userName":"ritage" ,
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+    "userName": "ritage",
     "role": "student",
-    "email":"ritage@gmail.com" 
+    "email": "ritage@gmail.com"
+  },
+  {
+    "enrolledCourses": [
+      "C003"
+    ],
+    "progress": {},
+    "quizScores": {},
+    "certificates": [],
+    "userID": "10972",
+    "password": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+    "userName": "user",
+    "role": "student",
+    "email": "user@gmail.com"
   }
-
 ]

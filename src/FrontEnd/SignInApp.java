@@ -29,10 +29,10 @@ public class SignInApp {
 
     static {
         try {
-         users = new UserService("C:\\Users\\USER\\Documents\\NetBeansProjects\\Prog2_lab8-main\\src\\data\\users.json");
-        courseService = new CourseService("C:\\Users\\USER\\Documents\\NetBeansProjects\\Prog2_lab8-main\\src\\data\\courses.json");
-        studentService = new StudentService(users, courseService, "C:\\Users\\USER\\Documents\\NetBeansProjects\\Prog2_lab8-main\\src\\data\\students.json");
-        instructorManagment = new InstructorManagment(courseService, studentService, "C:\\Users\\USER\\Documents\\NetBeansProjects\\Prog2_lab8-main\\src\\data\\instructors.json");
+         users = new UserService("src\\data\\users.json");//C:\Users\USER\Documents\NetBeansProjects\Prog2_lab8-main\src\data\ users.json
+        courseService = new CourseService("src\\data\\courses.json");
+        studentService = new StudentService(users, courseService, "src\\data\\students.json");
+        instructorManagment = new InstructorManagment(courseService, studentService, "src\\data\\instructors.json");
 
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (IOException e) {
@@ -279,6 +279,7 @@ public class SignInApp {
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         JButton browseButton = new JButton("Browse Courses");
         JButton signOutBtn = new JButton("Sign Out");
+        JButton viewCertificateBtn = new JButton("View Certificate");
         signOutBtn.addActionListener(e -> {
             main.dispose();
             showSignInWindow();
@@ -292,8 +293,15 @@ public class SignInApp {
 
         });
 
+
+        viewCertificateBtn.addActionListener(e -> {
+            //add code here
+        });
+
+
+
         panel.add(browseButton);
-        panel.add(new JLabel());
+        panel.add(viewCertificateBtn);
         panel.add(signOutBtn);
         main.add(panel);
         main.setVisible(true);
