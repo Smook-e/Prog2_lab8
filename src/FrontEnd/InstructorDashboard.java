@@ -123,7 +123,7 @@ public class InstructorDashboard extends javax.swing.JFrame {
 
         viewStudentPerformanceBtn.setActionCommand(" View Completion percentages.");
         viewStudentPerformanceBtn.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        viewStudentPerformanceBtn.setLabel("View Students Progress");
+        viewStudentPerformanceBtn.setLabel("View Student Performance");
         viewStudentPerformanceBtn.setName(""); // NOI18N
         viewStudentPerformanceBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,7 +176,7 @@ public class InstructorDashboard extends javax.swing.JFrame {
                         .addComponent(viewStudentPerformanceBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(studentprogressBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
