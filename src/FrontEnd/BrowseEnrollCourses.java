@@ -4,7 +4,9 @@
  */
 package FrontEnd;
 import Courses.Course;
+import JSON.CertificateService;
 import JSON.CourseService;
+import JSON.InstructorManagment;
 import JSON.StudentService;
 import Users.Student;
 import java.util.List;
@@ -22,12 +24,15 @@ public class BrowseEnrollCourses extends javax.swing.JFrame {
   private Student student;
     private StudentService studentService;
     private CourseService courseService;
+    private InstructorManagment instructorManagment;
+    private CertificateService certificateService;
 
-    public BrowseEnrollCourses(Student student, StudentService studentService, CourseService courseService) {
+    public BrowseEnrollCourses(Student student, StudentService studentService, CourseService courseService, InstructorManagment instructorManagment, CertificateService certificateService) {
         this.student = student;
         this.studentService = studentService;
         this.courseService = courseService;
-
+        this.instructorManagment = instructorManagment;
+        this.certificateService = certificateService;
         initComponents();
         setupTable();
     }
@@ -144,7 +149,7 @@ public class BrowseEnrollCourses extends javax.swing.JFrame {
             System.out.println("empty");
             return;
         }
-        EnrolledOnlyCoursesFrame e =  new EnrolledOnlyCoursesFrame(student, studentService, courseService);
+        EnrolledOnlyCoursesFrame e =  new EnrolledOnlyCoursesFrame(student, studentService, courseService,instructorManagment,certificateService);
         e.setVisible(true);
         e.setLocationRelativeTo(null);
 

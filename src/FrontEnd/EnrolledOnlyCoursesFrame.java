@@ -3,31 +3,40 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package FrontEnd;
+
 import Courses.Course;
+import JSON.CertificateService;
 import JSON.CourseService;
+import JSON.InstructorManagment;
 import JSON.StudentService;
 import Users.Student;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author USER
  */
 public class EnrolledOnlyCoursesFrame extends javax.swing.JFrame {
-private Student student;
+
+    private Student student;
     private StudentService studentService;
     private CourseService courseService;
+    private InstructorManagment instructorManagment;
+    private CertificateService certificateService;
 
-    public EnrolledOnlyCoursesFrame(Student student, StudentService studentService, CourseService courseService) {
+    public EnrolledOnlyCoursesFrame(Student student, StudentService studentService, CourseService courseService ,InstructorManagment instructorManagment,CertificateService certificateService) {
         this.student = student;
         this.studentService = studentService;
         this.courseService = courseService;
-
+        this.instructorManagment = instructorManagment;
+        this.certificateService = certificateService;
         initComponents();
         setupTable();
         loadEnrolledCourses();
     }
+
     private void setupTable() {
         DefaultTableModel model = new DefaultTableModel(
                 new String[]{"Course ID", "Title"}, 0
@@ -50,10 +59,11 @@ private Student student;
             model.addRow(new Object[]{c.getCourseId(), c.getTitle()});
         }
     }
+
     /**
      * Creates new form EnrolledOnlyCoursesFrame
      */
-  
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -67,6 +77,7 @@ private Student student;
         enrolledTable = new javax.swing.JTable();
         viewLessonsBtn = new javax.swing.JButton();
         backBtn1 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -97,15 +108,24 @@ private Student student;
             }
         });
 
+        jButton1.setText("Create Certificate");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addGap(58, 58, 58)
                 .addComponent(viewLessonsBtn)
-                .addGap(95, 95, 95))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addContainerGap(320, Short.MAX_VALUE)
@@ -118,7 +138,9 @@ private Student student;
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
-                .addComponent(viewLessonsBtn)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(viewLessonsBtn)
+                    .addComponent(jButton1))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -134,15 +156,14 @@ private Student student;
         // TODO add your handling code here:
         int row = enrolledTable.getSelectedRow();
 
-    if (row == -1) {
-        JOptionPane.showMessageDialog(this, "Please select a course first.");
-        return;
-    }
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a course first.");
+            return;
+        }
 
-   
-    String courseId = enrolledTable.getValueAt(row, 0).toString();
+        String courseId = enrolledTable.getValueAt(row, 0).toString();
         JFrame frame = new JFrame("Lesson Management");
-        LessonManagement lessonPanel = new LessonManagement(student, studentService, courseService, courseId);
+        LessonManagement lessonPanel = new LessonManagement(student, studentService, courseService, courseId,instructorManagment,certificateService);
 
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().add(lessonPanel);
@@ -150,24 +171,44 @@ private Student student;
         frame.setLocationRelativeTo(null); // center on screen
         frame.setVisible(true);
 
-    this.dispose();
+        this.dispose();
     }//GEN-LAST:event_viewLessonsBtnActionPerformed
 
     private void backBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtn1ActionPerformed
         // TODO add your handling code here:
-      BrowseEnrollCourses b =  new BrowseEnrollCourses(student, studentService, courseService);
-      b.setVisible(true);
-      b.setLocationRelativeTo(null);
-      this.dispose();
+        BrowseEnrollCourses b = new BrowseEnrollCourses(student, studentService, courseService,instructorManagment,certificateService);
+        b.setVisible(true);
+        b.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_backBtn1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int row = enrolledTable.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a course first.");
+            return;
+        }
+        String courseId = enrolledTable.getValueAt(row, 0).toString();
+        if (instructorManagment.isCourseFullyCompleted(student.getUserID(), courseId)) {
+            if (studentService.hasCertificate(student.getUserID(), courseId)) {
+                JOptionPane.showMessageDialog(this,"Certificate already generated for this course!", "Certificate Exists", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            certificateService.generateCertificate(student,courseService.getCourseById(courseId));
+            JOptionPane.showMessageDialog(this,"Congratulations! Certificate generated successfully");
+        } else {
+            JOptionPane.showMessageDialog(this,"Course not completed yet!\nPlease complete all quizzes to earn certificate.","Course Incomplete",JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn1;
     private javax.swing.JTable enrolledTable;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton viewLessonsBtn;
     // End of variables declaration//GEN-END:variables
