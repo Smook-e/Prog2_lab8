@@ -131,16 +131,20 @@ public double getLessonAverage(String courseId, String lessonId) {
 
     for (String sid : students) {
         Student s = studentService.getStudentById(sid);
-        Integer score = s.getQuizScores().get(lessonId);
+        if (s == null) continue;
 
+        Integer score = s.getQuizScores().get(lessonId); 
         if (score != null) {
             total += score;
             count++;
         }
     }
 
-    return count == 0 ? 0 : (double) total / count;
+    if (count == 0) return 0.0;
+    return (double) total / count;
 }
+
+
 
 public double getStudentAverageQuizScore(String studentId, String courseId) {
     Student student = studentService.getStudentById(studentId);

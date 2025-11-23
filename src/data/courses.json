@@ -37,19 +37,9 @@
         "title": "lesson1",
         "content": "learn",
         "Resources": []
-      },
-      {
-        "lessonId": "L2",
-        "title": "lesson2",
-        "content": "learn",
-        "Resources": []
       }
     ],
     "students": [
-      "10470",
-      "S002",
-      "10046",
-      "10351",
       "10103",
       "10493",
       "10255"
