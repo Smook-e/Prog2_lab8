@@ -151,7 +151,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Dialog" size="14" style="0"/>
         </Property>
-        <Property name="label" type="java.lang.String" value="Delete Lesson"/>
+        <Property name="label" type="java.lang.String" value="Quiz Avrage"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="quizAverageBtnActionPerformed"/>

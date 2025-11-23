@@ -117,7 +117,7 @@ getContentPane().add(jComboBoxLessons);
 
         quizAverageBtn.setActionCommand("View Average");
         quizAverageBtn.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        quizAverageBtn.setLabel("Delete Lesson");
+        quizAverageBtn.setLabel("Quiz Avrage");
         quizAverageBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 quizAverageBtnActionPerformed(evt);
