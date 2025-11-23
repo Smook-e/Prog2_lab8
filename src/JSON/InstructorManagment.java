@@ -189,7 +189,9 @@ public double getStudentAverageQuizScore(String studentId, String courseId) {
     if (student == null || course == null) return 0;
     return student.getProgress().getOrDefault(courseId, new ArrayList<>()).size();
 }
-   
+  public boolean isCourseFullyCompleted(String studentId, String courseId) {
+    return getStudentCourseCompletionPercentage(studentId, courseId) == 100.0;
+}  
    
    
 public boolean addInstructor(Instructor instructor, UserService users) {
