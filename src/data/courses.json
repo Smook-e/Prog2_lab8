@@ -37,12 +37,6 @@
         "title": "lesson1",
         "content": "learn",
         "Resources": []
-      },
-      {
-        "lessonId": "L2",
-        "title": "lesson2",
-        "content": "learn",
-        "Resources": []
       }
     ],
     "students": [
