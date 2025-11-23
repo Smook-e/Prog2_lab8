@@ -21,17 +21,17 @@
   },
   {
     "enrolledCourses": [
-      "C003"
+      "C001"
     ],
     "progress": {
-      "C003": [
+      "C001": [
         "L001",
         "L002"
       ]
     },
     "quizScores": {
-      "L001": 9,
-      "L002": 8
+      "L1": 9,
+      "L2": 8
     },
     "userID": "S002",
     "password": "pass456",

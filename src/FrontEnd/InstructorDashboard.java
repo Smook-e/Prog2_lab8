@@ -6,21 +6,33 @@ package FrontEnd;
 
 
 import Courses.Course;
+import static FrontEnd.SignInApp.courseService;
+import static FrontEnd.SignInApp.studentService;
 import JSON.CourseService;
 import JSON.InstructorManagment;
 import JSON.StudentService;
 import JSON.UserService;
 import Users.Instructor;
+import Users.Student;
 import Users.User;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryLabelPositions;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -65,11 +77,12 @@ public class InstructorDashboard extends javax.swing.JFrame {
         button2 = new java.awt.Button();
         button3 = new java.awt.Button();
         button4 = new java.awt.Button();
-        button5 = new java.awt.Button();
+        viewStudentPerformanceBtn = new java.awt.Button();
         scrollPane1 = new java.awt.ScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
         button6 = new java.awt.Button();
+        studentprogressBtn = new java.awt.Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -108,11 +121,13 @@ public class InstructorDashboard extends javax.swing.JFrame {
             }
         });
 
-        button5.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        button5.setLabel("View Students Progress");
-        button5.addActionListener(new java.awt.event.ActionListener() {
+        viewStudentPerformanceBtn.setActionCommand(" View Completion percentages.");
+        viewStudentPerformanceBtn.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        viewStudentPerformanceBtn.setLabel("View Students Progress");
+        viewStudentPerformanceBtn.setName(""); // NOI18N
+        viewStudentPerformanceBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button5ActionPerformed(evt);
+                viewStudentPerformanceBtnActionPerformed(evt);
             }
         });
 
@@ -132,6 +147,15 @@ public class InstructorDashboard extends javax.swing.JFrame {
             }
         });
 
+        studentprogressBtn.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        studentprogressBtn.setLabel("View Students Progress");
+        studentprogressBtn.setName(""); // NOI18N
+        studentprogressBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studentprogressBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -139,19 +163,19 @@ public class InstructorDashboard extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(scrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
+                .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(button6, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(button6, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(43, 43, 43))
+                        .addComponent(viewStudentPerformanceBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(studentprogressBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(20, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -173,12 +197,18 @@ public class InstructorDashboard extends javax.swing.JFrame {
                         .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(studentprogressBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(scrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(viewStudentPerformanceBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19)
                 .addComponent(button6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        viewStudentPerformanceBtn.getAccessibleContext().setAccessibleName(" View Completion percentages.");
+        viewStudentPerformanceBtn.getAccessibleContext().setAccessibleDescription(" View Completion percentages.");
+        studentprogressBtn.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -247,8 +277,33 @@ public class InstructorDashboard extends javax.swing.JFrame {
         this.dispose(); 
     }//GEN-LAST:event_button4ActionPerformed
 
-    private void button5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button5ActionPerformed
-        String selected=jList1.getSelectedValue();
+    private void viewStudentPerformanceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewStudentPerformanceBtnActionPerformed
+   String selectedCourseId = jList1.getSelectedValue();
+
+    if (selectedCourseId == null) {
+        JOptionPane.showMessageDialog(this, "Please select a course first.");
+        return;
+    }
+
+    // Open the Students Performance window
+    ViewStudentsPerformance frame = new ViewStudentsPerformance(
+            instructorManagment,
+            instructor,
+            instructorManagment.getCourseService(),
+            instructorManagment.getStudentService(),
+            selectedCourseId
+    );
+
+    frame.setLocationRelativeTo(null);
+    frame.setVisible(true);
+
+    // Close dashboard (optional)
+    this.dispose();
+    }//GEN-LAST:event_viewStudentPerformanceBtnActionPerformed
+
+    private void studentprogressBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentprogressBtnActionPerformed
+        // TODO add your handling code here:
+         String selected=jList1.getSelectedValue();
         if(selected==null)
         {
             JOptionPane.showMessageDialog(this,"Select a course.");
@@ -258,7 +313,7 @@ public class InstructorDashboard extends javax.swing.JFrame {
         v.setVisible(true);
         v.setLocationRelativeTo(null);
           this.dispose(); 
-    }//GEN-LAST:event_button5ActionPerformed
+    }//GEN-LAST:event_studentprogressBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -301,11 +356,12 @@ public class InstructorDashboard extends javax.swing.JFrame {
     private java.awt.Button button2;
     private java.awt.Button button3;
     private java.awt.Button button4;
-    private java.awt.Button button5;
     private java.awt.Button button6;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private java.awt.Label label1;
     private java.awt.ScrollPane scrollPane1;
+    private java.awt.Button studentprogressBtn;
+    private java.awt.Button viewStudentPerformanceBtn;
     // End of variables declaration//GEN-END:variables
 }
