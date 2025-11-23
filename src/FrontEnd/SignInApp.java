@@ -271,41 +271,50 @@ public class SignInApp {
 
 
     public static void studentDashboard(Student s) {
-        JFrame main = new JFrame("studentDashboard");
-        main.setSize(500, 400);
-        main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        main.setLocationRelativeTo(null);
-        JPanel panel = new JPanel(new GridLayout(3, 1, 10, 15));
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        JButton browseButton = new JButton("Browse Courses");
-        JButton signOutBtn = new JButton("Sign Out");
-        JButton viewCertificateBtn = new JButton("View Certificate");
-        signOutBtn.addActionListener(e -> {
-            main.dispose();
-            showSignInWindow();
-        });
-        browseButton.addActionListener(e -> {
-            BrowseEnrollCourses b =    new BrowseEnrollCourses(s, studentService, courseService);
+    JFrame main = new JFrame("Student Dashboard");
+    main.setSize(500, 450);
+    main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    main.setLocationRelativeTo(null);
 
-            b.setVisible(true);
-            b.setLocationRelativeTo(null);
-            main.dispose();
+    JPanel panel = new JPanel(new GridLayout(5, 1, 10, 15));
+    panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        });
+    // Buttons
+    JButton browseButton = new JButton("Browse Courses");
+    JButton certificatesEarnedBtn = new JButton("Certificates Earned");
+    JButton viewCertificateBtn = new JButton("View My Certificate");
+    JButton signOutBtn = new JButton("Sign Out");
 
+    signOutBtn.addActionListener(e -> {
+        main.dispose();
+        showSignInWindow();
+    });
+    browseButton.addActionListener(e -> {
+        BrowseEnrollCourses b = new BrowseEnrollCourses(s, studentService, courseService);
+        b.setVisible(true);
+        b.setLocationRelativeTo(null);
+        main.dispose();
+    });
 
-        viewCertificateBtn.addActionListener(e -> {
-            //add code here
-        });
+    certificatesEarnedBtn.addActionListener(e -> {
+        // Add the action 
+ 
+    });
 
+    viewCertificateBtn.addActionListener(e -> {
+        // Add the action 
+        
+    });
 
+    panel.add(browseButton);
+    panel.add(certificatesEarnedBtn);
+    panel.add(viewCertificateBtn);
+    panel.add(signOutBtn);
 
-        panel.add(browseButton);
-        panel.add(viewCertificateBtn);
-        panel.add(signOutBtn);
-        main.add(panel);
-        main.setVisible(true);
-    }
+    main.add(panel);
+    main.setVisible(true);
+}
+
     private static final String EMAIL_REGEX =
             "^[A-Za-z0-9+_.-]+@([A-Za-z0-9.-]+\\.[A-Za-z]{2,})$";
 
