@@ -1,4 +1,5 @@
 package FrontEnd;
+
 import FrontEnd.CourseManagementStudent;
 import FrontEnd.InstructorDashboard;
 import JSON.StudentService;
@@ -18,21 +19,23 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import FrontEnd.InstructorDashboard;
-
-
+import JSON.CertificateService;
 
 public class SignInApp {
+
     static UserService users;
     static CourseService courseService;
     static StudentService studentService;
+    static CertificateService certificateService;
     static InstructorManagment instructorManagment;
 
     static {
         try {
-         users = new UserService("src\\data\\users.json");//C:\Users\USER\Documents\NetBeansProjects\Prog2_lab8-main\src\data\ users.json
-        courseService = new CourseService("src\\data\\courses.json");
-        studentService = new StudentService(users, courseService, "src\\data\\students.json");
-        instructorManagment = new InstructorManagment(courseService, studentService, "src\\data\\instructors.json");
+            users = new UserService("C:\\Users\\Mega Store\\Documents\\GitHub\\Prog2_lab8\\src\\data\\users.json");//C:\Users\USER\Documents\NetBeansProjects\Prog2_lab8-main\src\data\ users.json
+            courseService = new CourseService("C:\\Users\\Mega Store\\Documents\\GitHub\\Prog2_lab8\\src\\data\\courses.json");
+            studentService = new StudentService(users, courseService, "C:\\Users\\Mega Store\\Documents\\GitHub\\Prog2_lab8\\src\\data\\students.json");
+            certificateService = new CertificateService("C:\\Users\\Mega Store\\Documents\\GitHub\\Prog2_lab8\\src\\data\\students.json");
+            instructorManagment = new InstructorManagment(courseService, studentService, "C:\\Users\\Mega Store\\Documents\\GitHub\\Prog2_lab8\\src\\data\\instructors.json");
 
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (IOException e) {
@@ -49,7 +52,8 @@ public class SignInApp {
         }
     }
 
-    public SignInApp() throws IOException {}
+    public SignInApp() throws IOException {
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(SignInApp::showSignInWindow);
@@ -69,7 +73,6 @@ public class SignInApp {
         JPasswordField passField = new JPasswordField();
         JButton signInBtn = new JButton("Sign In");
         JButton registerBtn = new JButton("Register");
-
 
         panel.add(new JLabel("Username:"));
         panel.add(userField);
@@ -133,8 +136,6 @@ public class SignInApp {
         group.add(option1);
         group.add(option2);
 
-
-
         panel.add(new JLabel("Username:"));
         panel.add(userNameField);
         panel.add(new JLabel("Email:"));
@@ -170,12 +171,11 @@ public class SignInApp {
                 return;
             }
 
-
             //create ID
             Random rand = new Random();
-            int randomNum = rand.nextInt(1000) +10000;
-            while(users.containsID(Integer.toString(randomNum))){
-                randomNum = rand.nextInt(1000) +10000;
+            int randomNum = rand.nextInt(1000) + 10000;
+            while (users.containsID(Integer.toString(randomNum))) {
+                randomNum = rand.nextInt(1000) + 10000;
             }
             String userID = Integer.toString(randomNum);
             String hashedPassword = hashPassword(pass1);
@@ -190,6 +190,7 @@ public class SignInApp {
         dialog.add(panel);
         dialog.setVisible(true);
     }
+
     private static String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -205,124 +206,121 @@ public class SignInApp {
     }
 
     // ===================== SIGN IN LOGIC =====================
-   private static void handleSignIn(String username, String password, JFrame frame) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-    if (username.isEmpty() || password.isEmpty()) {
-        JOptionPane.showMessageDialog(frame, "Please fill all fields!", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    String hashedPassword = hashPassword(password);
-
-    if (validateLogin(username, hashedPassword)) {
-        JOptionPane.showMessageDialog(frame, "Welcome, " + username + "!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        frame.dispose();
-
-        User u = users.getUserByUsername(username);
-
-        
-    if (u.getRole().equalsIgnoreCase("Student")) {
-        // Load student from students.json
-        Student s = studentService.getDb().stream()
-                .filter(st -> st.getUserID().equals(u.getUserID()))
-                .findFirst()
-                .orElse(null);
-
-        if (s == null) {
-            // If not in students.json yet, create new and add
-            s = new Student(u.getUserID(), u.getPassword(), u.getUserName(), u.getEmail());
-            s.setStudentService(studentService);
-            studentService.addStudent(s);
-        } else {
-            s.setStudentService(studentService);
+    private static void handleSignIn(String username, String password, JFrame frame) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        if (username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(frame, "Please fill all fields!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-            studentDashboard(s);
+
+        String hashedPassword = hashPassword(password);
+
+        if (validateLogin(username, hashedPassword)) {
+            JOptionPane.showMessageDialog(frame, "Welcome, " + username + "!", "Success", JOptionPane.INFORMATION_MESSAGE);
             frame.dispose();
 
-        } else if (u.getRole().equalsIgnoreCase("Instructor")) {
-    Instructor inst = instructorManagment.getDb().stream()
-            .filter(i -> i.getUserID().equals(u.getUserID()))
-            .findFirst()
-            .orElse(null);
-    if (inst == null) {
-         
-        inst = new Instructor(u.getUserID(), u.getPassword(), u.getUserName(), u.getEmail());
-        inst.setInstructorManagment(instructorManagment);
-        instructorManagment.addInstructor(inst, users);
-    } 
-    else {
-        inst.setInstructorManagment(instructorManagment);
-    }
-    InstructorDashboard dashboard = new InstructorDashboard(instructorManagment, inst);
-    dashboard.setVisible(true);
-    dashboard.setLocationRelativeTo(null);
-} else {
+            User u = users.getUserByUsername(username);
+
+            if (u.getRole().equalsIgnoreCase("Student")) {
+                // Load student from students.json
+                Student s = studentService.getDb().stream()
+                        .filter(st -> st.getUserID().equals(u.getUserID()))
+                        .findFirst()
+                        .orElse(null);
+
+                if (s == null) {
+                    // If not in students.json yet, create new and add
+                    s = new Student(u.getUserID(), u.getPassword(), u.getUserName(), u.getEmail());
+                    s.setStudentService(studentService);
+                    studentService.addStudent(s);
+                } else {
+                    s.setStudentService(studentService);
+                }
+                studentDashboard(s);
+                frame.dispose();
+
+            } else if (u.getRole().equalsIgnoreCase("Instructor")) {
+                Instructor inst = instructorManagment.getDb().stream()
+                        .filter(i -> i.getUserID().equals(u.getUserID()))
+                        .findFirst()
+                        .orElse(null);
+                if (inst == null) {
+
+                    inst = new Instructor(u.getUserID(), u.getPassword(), u.getUserName(), u.getEmail());
+                    inst.setInstructorManagment(instructorManagment);
+                    instructorManagment.addInstructor(inst, users);
+                } else {
+                    inst.setInstructorManagment(instructorManagment);
+                }
+                InstructorDashboard dashboard = new InstructorDashboard(instructorManagment, inst);
+                dashboard.setVisible(true);
+                dashboard.setLocationRelativeTo(null);
+            } else {
 
                 AdminCourseDashboard a = new AdminCourseDashboard(courseService);
                 a.setVisible(true);
                 a.setLocationRelativeTo(null);
                 frame.dispose();
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(frame, "Invalid username or password!", "Login Failed", JOptionPane.ERROR_MESSAGE);
         }
-
-    } else {
-        JOptionPane.showMessageDialog(frame, "Invalid username or password!", "Login Failed", JOptionPane.ERROR_MESSAGE);
     }
-}
-
-
 
     public static void studentDashboard(Student s) {
-    JFrame main = new JFrame("Student Dashboard");
-    main.setSize(500, 450);
-    main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    main.setLocationRelativeTo(null);
+        JFrame main = new JFrame("Student Dashboard");
+        main.setSize(500, 450);
+        main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        main.setLocationRelativeTo(null);
 
-    JPanel panel = new JPanel(new GridLayout(5, 1, 10, 15));
-    panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        JPanel panel = new JPanel(new GridLayout(5, 1, 10, 15));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-    // Buttons
-    JButton browseButton = new JButton("Browse Courses");
-    JButton certificatesEarnedBtn = new JButton("Certificates Earned");
-    JButton viewCertificateBtn = new JButton("View My Certificate");
-    JButton signOutBtn = new JButton("Sign Out");
+        // Buttons
+        JButton browseButton = new JButton("Browse Courses");
+        JButton certificatesEarnedBtn = new JButton("Certificates Earned");
+        JButton viewCertificateBtn = new JButton("View My Certificate");
+        JButton signOutBtn = new JButton("Sign Out");
 
-    signOutBtn.addActionListener(e -> {
-        main.dispose();
-        showSignInWindow();
-    });
-    browseButton.addActionListener(e -> {
-        BrowseEnrollCourses b = new BrowseEnrollCourses(s, studentService, courseService);
-        b.setVisible(true);
-        b.setLocationRelativeTo(null);
-        main.dispose();
-    });
+        signOutBtn.addActionListener(e -> {
+            main.dispose();
+            showSignInWindow();
+        });
+        browseButton.addActionListener(e -> {
+            BrowseEnrollCourses b = new BrowseEnrollCourses(s, studentService, courseService,instructorManagment,certificateService);
+            b.setVisible(true);
+            b.setLocationRelativeTo(null);
+            main.dispose();
+        });
 
-    certificatesEarnedBtn.addActionListener(e -> {
-        // Add the action 
- 
-    });
+        certificatesEarnedBtn.addActionListener(e -> {
+            JFrame frame = new JFrame("Certificates");
+            ViewCertificate vc = new ViewCertificate(s, courseService, certificateService);
+            frame.setContentPane(vc);
+            frame.pack();
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+            main.dispose();
+        });
 
-    viewCertificateBtn.addActionListener(e -> {
-        // Add the action 
-        
-    });
+        panel.add(browseButton);
+        panel.add(certificatesEarnedBtn);
+        panel.add(signOutBtn);
 
-    panel.add(browseButton);
-    panel.add(certificatesEarnedBtn);
-    panel.add(viewCertificateBtn);
-    panel.add(signOutBtn);
+        main.add(panel);
+        main.setVisible(true);
+    }
 
-    main.add(panel);
-    main.setVisible(true);
-}
+    private static final String EMAIL_REGEX
+            = "^[A-Za-z0-9+_.-]+@([A-Za-z0-9.-]+\\.[A-Za-z]{2,})$";
 
-    private static final String EMAIL_REGEX =
-            "^[A-Za-z0-9+_.-]+@([A-Za-z0-9.-]+\\.[A-Za-z]{2,})$";
-
-    private static final java.util.regex.Pattern pattern =
-            java.util.regex.Pattern.compile(EMAIL_REGEX);
+    private static final java.util.regex.Pattern pattern
+            = java.util.regex.Pattern.compile(EMAIL_REGEX);
 
     public static boolean isValid(String email) {
-        if (email == null) return false;
+        if (email == null) {
+            return false;
+        }
         return pattern.matcher(email).matches();
     }
 
@@ -335,18 +333,10 @@ public class SignInApp {
                 return true;
             }
         }
-        return false;   }
-
+        return false;
+    }
 
     private static boolean usernameExists(String username) {
         return users.getDb().stream().anyMatch(u -> u.getUserName().equals(username));
     }
 }
-
-
-
-
-
-
-
-

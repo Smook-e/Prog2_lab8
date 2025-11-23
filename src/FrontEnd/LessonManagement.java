@@ -3,9 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package FrontEnd;
+
 import Courses.Course;
 import Courses.Lesson;
+import JSON.CertificateService;
 import JSON.CourseService;
+import JSON.InstructorManagment;
 import JSON.StudentService;
 import Users.Student;
 import java.util.ArrayList;
@@ -24,27 +27,31 @@ public class LessonManagement extends javax.swing.JPanel {
      * Creates new form LessonManagement
      */
     private Student student;
-private StudentService studentService;
-private CourseService courseService;
-private String courseId;
+    private StudentService studentService;
+    private CourseService courseService;
+    private InstructorManagment instructorManagment;
+    private CertificateService certificateService;
+    private String courseId;
 
-public LessonManagement(Student student, StudentService studentService, CourseService courseService, String courseId) {
-    this.student = student;
-    this.studentService = studentService;
-    this.courseService = courseService;
-    this.courseId = courseId;
+    public LessonManagement(Student student, StudentService studentService, CourseService courseService, String courseId, InstructorManagment instructorManagment, CertificateService certificateService) {
+        this.student = student;
+        this.studentService = studentService;
+        this.courseService = courseService;
+        this.courseId = courseId;
+        this.instructorManagment = instructorManagment;
+        this.certificateService = certificateService;
+        initComponents();
+        setupTable();
+        loadLessons();
+    }
 
-    initComponents();
-    setupTable();
-    loadLessons();
-}
+    private void setupTable() {
+        DefaultTableModel model = new DefaultTableModel(
+                new String[]{"Lesson ID", "Title", "Completed"}, 0
+        );
+        lessonsTable.setModel(model);
+    }
 
-private void setupTable() {
-    DefaultTableModel model = new DefaultTableModel(
-            new String[]{"Lesson ID", "Title", "Completed"}, 0
-    );
-    lessonsTable.setModel(model);
-}
     private void loadLessons() {
         DefaultTableModel model = (DefaultTableModel) lessonsTable.getModel();
         model.setRowCount(0);
@@ -56,11 +63,11 @@ private void setupTable() {
             boolean isCompleted = completed.contains(l.getLessonId());
 
             model.addRow(new Object[]{
-                            l.getLessonId(),
-                            l.getTitle(),
-                            isCompleted ? "Yes" : "No"
-                    });
-}
+                l.getLessonId(),
+                l.getTitle(),
+                isCompleted ? "Yes" : "No"
+            });
+        }
     }
 
     /**
@@ -143,49 +150,48 @@ private void setupTable() {
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
-       EnrolledOnlyCoursesFrame e =      new EnrolledOnlyCoursesFrame(student, studentService, courseService);
-       e.setVisible(true);
-       e.setLocationRelativeTo(null);
+        EnrolledOnlyCoursesFrame e = new EnrolledOnlyCoursesFrame(student, studentService, courseService, instructorManagment, certificateService);
+        e.setVisible(true);
+        e.setLocationRelativeTo(null);
         javax.swing.SwingUtilities.getWindowAncestor(this).dispose();
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void markCompletedBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_markCompletedBtnActionPerformed
         // TODO add your handling code here:
-         int row = lessonsTable.getSelectedRow();
+        int row = lessonsTable.getSelectedRow();
 
-    if (row == -1) {
-        JOptionPane.showMessageDialog(this, "Please select a lesson.");
-        return;
-    }
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a lesson.");
+            return;
+        }
 
-    String lessonId = lessonsTable.getValueAt(row, 0).toString();
+        String lessonId = lessonsTable.getValueAt(row, 0).toString();
 
-    Boolean ok = student.markLessonCompleted(courseId, lessonId);
+        Boolean ok = student.markLessonCompleted(courseId, lessonId);
 
-   if (ok == null) {
-    return; 
-}
+        if (ok == null) {
+            return;
+        }
 
-if (ok) {
-    JOptionPane.showMessageDialog(this, "Lesson marked completed!");
-    loadLessons();
-} else {
-    JOptionPane.showMessageDialog(this, "Already completed.");
-}
+        if (ok) {
+            JOptionPane.showMessageDialog(this, "Lesson marked completed!");
+            loadLessons();
+        } else {
+            JOptionPane.showMessageDialog(this, "Already completed.");
+        }
     }//GEN-LAST:event_markCompletedBtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       int row = lessonsTable.getSelectedRow();
-       if(row==-1)
-       {
-           JOptionPane.showMessageDialog(this,"Please select a lesson.");
-           return;
-       }
-       String lessonId = lessonsTable.getValueAt(row, 0).toString();
-       TakeQuiz takeQuiz = new TakeQuiz(courseService.getLessonById(courseId, lessonId).getQuiz().getQuizId(),this);
-       takeQuiz.setVisible(true);
-       takeQuiz.setLocationRelativeTo(null);
-       getWindowAncestor(this).setVisible(false);  
+        int row = lessonsTable.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a lesson.");
+            return;
+        }
+        String lessonId = lessonsTable.getValueAt(row, 0).toString();
+        TakeQuiz takeQuiz = new TakeQuiz(courseService.getLessonById(courseId, lessonId).getQuiz().getQuizId(), this);
+        takeQuiz.setVisible(true);
+        takeQuiz.setLocationRelativeTo(null);
+        getWindowAncestor(this).setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

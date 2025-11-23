@@ -3,7 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package FrontEnd;
+
+import JSON.CertificateService;
 import JSON.CourseService;
+import JSON.InstructorManagment;
 import JSON.StudentService;
 import Users.Student;
 
@@ -14,25 +17,25 @@ import javax.swing.*;
  * @author Mega Store
  */
 public class CourseManagementStudent extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CourseManagementStudent.class.getName());
-private Student student;
-private StudentService studentService;
-private CourseService courseService;
+    private Student student;
+    private StudentService studentService;
+    private CourseService courseService;
+    private InstructorManagment instructorManagment;
+    private CertificateService certificateService;
 
     /**
      * Creates new form CourseManagementStudent
      */
-    public CourseManagementStudent(Student student,
-                               StudentService studentService,
-                               CourseService courseService) {
-    this.student = student;
-    this.studentService = studentService;
-    this.courseService = courseService;
-
-    initComponents();
-}
-
+    public CourseManagementStudent(Student student, StudentService studentService, CourseService courseService, InstructorManagment instructorManagment, CertificateService certificateService) {
+        this.student = student;
+        this.studentService = studentService;
+        this.courseService = courseService;
+        this.instructorManagment = instructorManagment;
+        this.certificateService = certificateService;
+        initComponents();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -103,16 +106,15 @@ private CourseService courseService;
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // code for browse and enroll
-         BrowseEnrollCourses b =    new BrowseEnrollCourses(student, studentService, courseService);
-         b.setVisible(true);
-         b.setLocationRelativeTo(null);
-    this.dispose();
+        BrowseEnrollCourses b = new BrowseEnrollCourses(student, studentService, courseService, instructorManagment, certificateService);
+        b.setVisible(true);
+        b.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
