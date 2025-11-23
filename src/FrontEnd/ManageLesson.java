@@ -41,7 +41,7 @@ getContentPane().add(jComboBoxLessons);
        
     }
 
-    private void lessonList() {
+    public void lessonList() {
         DefaultListModel<String> model = new DefaultListModel<>();
         List<Lesson> lessons = instructorManagment.getCourseService().getLessons(courseId);
         for (Lesson lesson : lessons) {
@@ -77,6 +77,7 @@ getContentPane().add(jComboBoxLessons);
         button4 = new java.awt.Button();
         quizAverageBtn = new java.awt.Button();
         button6 = new java.awt.Button();
+        button3 = new java.awt.Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,7 +118,7 @@ getContentPane().add(jComboBoxLessons);
 
         quizAverageBtn.setActionCommand("View Average");
         quizAverageBtn.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        quizAverageBtn.setLabel("Quiz Avrage");
+        quizAverageBtn.setLabel("Quiz Average");
         quizAverageBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 quizAverageBtnActionPerformed(evt);
@@ -129,6 +130,14 @@ getContentPane().add(jComboBoxLessons);
         button6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button6ActionPerformed(evt);
+            }
+        });
+
+        button3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        button3.setLabel("Create Quiz");
+        button3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button3ActionPerformed(evt);
             }
         });
 
@@ -144,7 +153,8 @@ getContentPane().add(jComboBoxLessons);
                     .addComponent(button1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(button2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(quizAverageBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(button6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(button6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(button3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(52, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -162,17 +172,19 @@ getContentPane().add(jComboBoxLessons);
                 .addContainerGap()
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                        .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(quizAverageBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(scrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -242,6 +254,30 @@ getContentPane().add(jComboBoxLessons);
         // TODO add your handling code here:
     }//GEN-LAST:event_button6ActionPerformed
 
+    private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
+        String selected =jList1.getSelectedValue();
+       if(selected==null)
+       {
+           JOptionPane.showMessageDialog(this,"Select a lesson.");
+           return;
+       }
+       Lesson lesson=instructorManagment.getCourseService().getLessonById(courseId, selected);
+       if(lesson==null)
+       {
+           JOptionPane.showMessageDialog(this,"Lesson not found.");
+           return;
+       }
+       if(lesson.getQuiz()!=null)
+       {
+           JOptionPane.showMessageDialog(this," Lesson has a Quiz.");
+           return;
+       }
+       CreateQuiz createQuiz=new CreateQuiz(lesson,instructorManagment.getCourseService(),courseId,this);
+       createQuiz.setVisible(true);
+       createQuiz.setLocationRelativeTo(null); 
+       this.setVisible(false);
+    }//GEN-LAST:event_button3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -250,6 +286,7 @@ getContentPane().add(jComboBoxLessons);
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button button1;
     private java.awt.Button button2;
+    private java.awt.Button button3;
     private java.awt.Button button4;
     private java.awt.Button button6;
     private javax.swing.JList<String> jList1;
