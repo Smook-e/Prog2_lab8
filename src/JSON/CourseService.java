@@ -135,6 +135,19 @@ public class CourseService extends JsonDatabaseManager<Course> {
         }
         return false;
     }
+    public Lesson getLessonById(String courseId,String lessonId)
+    {
+        Course course = getCourseById(courseId);
+        if(course==null)return null;
+        for(Lesson lesson:course.getLessons())
+        {
+            if(lesson.getLessonId().equals(lessonId))
+            {
+                return lesson;
+            }
+        }
+        return null;
+    }
     
     public ArrayList<Lesson> getLessons(String courseId) {
         Course course = getCourseById(courseId);
