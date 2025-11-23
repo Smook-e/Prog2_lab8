@@ -1,23 +1,23 @@
 [
   {
     "enrolledCourses": [
-      "C001",
-      "C003"
+      "C001"
     ],
     "progress": {
-      "C003": [
-        "L001"
+      "C001": [
+        "L001",
+        "L002"
       ]
     },
     "quizScores": {
-      "L001": 10,
-      "L002": 10
+      "L1": 9,
+      "L2": 8
     },
-    "userID": "S001",
-    "password": "pass123",
-    "userName": "Alice",
+    "userID": "10103",
+    "password": "4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8",
+    "userName": "you",
     "role": "student",
-    "email": "alice@example.com"
+    "email": "hh@gmail.com"
   },
   {
     "enrolledCourses": [
@@ -33,54 +33,18 @@
       "L1": 9,
       "L2": 8
     },
-    "userID": "S002",
-    "password": "pass456",
-    "userName": "Bob",
-    "role": "student",
-    "email": "bob@example.com"
-  },
-  {
-    "enrolledCourses": [
-      "C001"
+    "certificates": [
+      {
+        "certificateId": "CERT-1763926064598",
+        "studentId": "10493",
+        "courseId": "C001",
+        "issueDate": "2025-11-23"
+      }
     ],
-    "progress": {
-      "C001": [
-        "L1"
-      ]
-    },
-    "quizScores": {
-      "L1": 7
-    },
-    "userID": "10470",
-    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
-    "userName": "ritage",
-    "role": "student",
-    "email": "ritage@gmail.com"
-  },
-  {
-    "enrolledCourses": [
-      "C003"
-    ],
-    "progress": {},
-    "quizScores": {},
-    "certificates": [],
-    "userID": "10972",
-    "password": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
-    "userName": "user",
-    "role": "student",
-    "email": "user@gmail.com"
-  },
-  {
-    "enrolledCourses": [
-      "C003"
-    ],
-    "progress": {},
-    "quizScores": {},
-    "certificates": [],
-    "userID": "10631",
+    "userID": "10493",
     "password": "4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8",
-    "userName": "goo",
+    "userName": "joooo",
     "role": "student",
-    "email": "ss@gmail.com"
+    "email": "gg@gmail.com"
   }
 ]

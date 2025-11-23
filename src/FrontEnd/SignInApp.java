@@ -279,7 +279,6 @@ public class SignInApp {
         // Buttons
         JButton browseButton = new JButton("Browse Courses");
         JButton certificatesEarnedBtn = new JButton("Certificates Earned");
-        JButton viewCertificateBtn = new JButton("View My Certificate");
         JButton signOutBtn = new JButton("Sign Out");
 
         signOutBtn.addActionListener(e -> {
@@ -295,7 +294,7 @@ public class SignInApp {
 
         certificatesEarnedBtn.addActionListener(e -> {
             JFrame frame = new JFrame("Certificates");
-            ViewCertificate vc = new ViewCertificate(s, courseService, certificateService);
+            ViewCertificate vc = new ViewCertificate(studentService, courseService, certificateService,s.getUserID());
             frame.setContentPane(vc);
             frame.pack();
             frame.setLocationRelativeTo(null);

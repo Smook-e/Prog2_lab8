@@ -6,10 +6,10 @@ import Users.Student;
 import Users.User;
 import java.io.IOException;
 
-public class CertificateService extends JsonDatabaseManager<User> {
+public class CertificateService extends JsonDatabaseManager<Student> {
 
     public CertificateService(String fileName) throws IOException {
-        super(fileName, User.class);
+        super(fileName, Student.class);
     }
 
     public Certificate generateCertificate(Student student, Course course) {
@@ -21,7 +21,7 @@ public class CertificateService extends JsonDatabaseManager<User> {
             return null;
         }
         student.getCertificates().add(cert);
-        db.add(SearchStudent(student.getUserID()), student);
+        db.set(SearchStudent(student.getUserID()), student);
         save();
         CertificatePDFGenerator.generate(cert, student, course);
         return cert;
@@ -29,28 +29,22 @@ public class CertificateService extends JsonDatabaseManager<User> {
 
     public int SearchStudent(String id) {
         int i = 0;
-        for (User u : db) {
-            if (u instanceof Student) {
-                if (u.getUserID().equals(id)) {
+        for (Student s: db) {
+                if (s.getUserID().equals(id)) {
                     return i;
                 }
                 i++;
             }
-
-        }
         return -1;
     }
 
     public Certificate getCertificateById(String certId) {
-        for (User u : db) {
-            if (u instanceof Student) {
-                Student s = (Student) u;
+        for (Student s : db) {
                 for (Certificate c : s.getCertificates()) {
                     if (c.getCertificateId().equals(certId)) {
                         return c;
                     }
                 }
-            }
         }
         return null;
     }
