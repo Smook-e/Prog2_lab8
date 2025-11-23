@@ -194,7 +194,7 @@ public class EnrolledOnlyCoursesFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this,"Certificate already generated for this course!", "Certificate Exists", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
-            certificateService.generateCertificate(student,courseService.getCourseById(courseId));
+            certificateService.generateCertificate(studentService.getStudentById(student.getUserID()),courseService.getCourseById(courseId));
             JOptionPane.showMessageDialog(this,"Congratulations! Certificate generated successfully");
         } else {
             JOptionPane.showMessageDialog(this,"Course not completed yet!\nPlease complete all quizzes to earn certificate.","Course Incomplete",JOptionPane.WARNING_MESSAGE);
