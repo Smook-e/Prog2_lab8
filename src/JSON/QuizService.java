@@ -22,8 +22,8 @@ public class QuizService {
     public QuizService()
     {
         try {
-            quizDb= new JsonDatabaseManager<>("C:\\Users\\HP\\OneDrive\\Documents\\GitHub\\Prog2_lab8\\src\\JSON\\quizzes.json",Quiz.class);
-            questionDb=new JsonDatabaseManager<>("C:\\Users\\HP\\OneDrive\\Documents\\GitHub\\Prog2_lab8\\src\\JSON\\questions.json",Question.class);
+            quizDb= new JsonDatabaseManager<>("C:\\Users\\USER\\Documents\\NetBeansProjects\\Prog2_lab8\\src\\data\\quizzes.json",Quiz.class);
+            questionDb=new JsonDatabaseManager<>("C:\\Users\\USER\\Documents\\NetBeansProjects\\Prog2_lab8\\src\\data\\questions.json",Question.class);
         } catch (IOException ex) {
             System.out.print("error intializing json file.");
         }

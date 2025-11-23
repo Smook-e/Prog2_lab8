@@ -126,10 +126,6 @@ public class InstructorManagment extends JsonDatabaseManager<Instructor> {
 public double getLessonAverage(String courseId, String lessonId) {
     ArrayList<String> students = courseService.getEnrolledStudents(courseId);
 
-    Lesson lesson = courseService.getLessonById(courseId, lessonId);
-    if (lesson == null || lesson.getQuiz() == null) return 0.0;
-
-    String quizId = lesson.getQuiz().getQuizId();
     int total = 0;
     int count = 0;
 
@@ -137,7 +133,7 @@ public double getLessonAverage(String courseId, String lessonId) {
         Student s = studentService.getStudentById(sid);
         if (s == null) continue;
 
-        Integer score = s.getQuizScores().get(quizId);
+        Integer score = s.getQuizScores().get(lessonId); 
         if (score != null) {
             total += score;
             count++;
@@ -147,6 +143,7 @@ public double getLessonAverage(String courseId, String lessonId) {
     if (count == 0) return 0.0;
     return (double) total / count;
 }
+
 
 
 public double getStudentAverageQuizScore(String studentId, String courseId) {

@@ -229,7 +229,7 @@ getContentPane().add(jComboBoxLessons);
         }
 
         String lessonId = selected.split(" - ")[0];
-        double average = instructorManagment.getLessonAverage(courseId, lessonId); // fixed
+        double average = instructorManagment.getLessonAverage(courseId, lessonId); 
 
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         dataset.addValue(average, "Average Score", lessonId);
