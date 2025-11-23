@@ -4,8 +4,10 @@
  */
 package FrontEnd;
 
+import Courses.Lesson;
 import Courses.Question;
 import Courses.Quiz;
+import JSON.CourseService;
 import JSON.JsonDatabaseManager;
 import JSON.QuizService;
 import java.io.*;
@@ -27,9 +29,17 @@ public class CreateQuiz extends javax.swing.JFrame {
      */
     private QuizService quizService;
     private Quiz quiz;
-    public CreateQuiz() {
+    private Lesson lesson;
+    private CourseService courseService;
+    private String courseId;
+    private ManageLesson manageLesson;
+    public CreateQuiz(Lesson lesson,CourseService courseService,String courseId,ManageLesson manageLesson) {
         initComponents();
         setLocationRelativeTo(null);
+        this.lesson=lesson;
+        this.courseService=courseService;
+        this.courseId=courseId;
+        this.manageLesson=manageLesson;
         quizService=new QuizService();
     }
 
@@ -310,48 +320,20 @@ public class CreateQuiz extends javax.swing.JFrame {
         choices.add(choice2);
         choices.add(choice3);
         choices.add(choice4);
-        quizService.createQuestion(quiz, questionText, choices, correctChoice); 
+       quizService.createQuestion(quiz, questionText, choices, correctChoice); 
        quizService.save();
+       lesson.setQuiz(quiz);
+       courseService.save();
        JOptionPane.showMessageDialog(this,"Quiz added successfully.");
        //return to the panel that has create quiz option
        this.dispose();
-       
+       manageLesson.setVisible(true);
+       manageLesson.lessonList();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CreateQuiz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CreateQuiz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CreateQuiz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CreateQuiz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CreateQuiz().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
