@@ -252,6 +252,22 @@ getContentPane().add(jComboBoxLessons);
 
     private void button6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button6ActionPerformed
         // TODO add your handling code here:
+        String selected=jList1.getSelectedValue();
+         if(selected==null)
+       {
+           JOptionPane.showMessageDialog(this,"Select a lesson.");
+           return;
+       }
+       boolean done=instructorManagment.deleteLesson(instructor, courseId, selected);
+       if(done)
+       {
+           JOptionPane.showMessageDialog(this,"Lesson deleted successfully.");
+           lessonList();
+       }
+       else
+       {
+           JOptionPane.showMessageDialog(this,"Failed to delete lesson!");
+       }
     }//GEN-LAST:event_button6ActionPerformed
 
     private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
