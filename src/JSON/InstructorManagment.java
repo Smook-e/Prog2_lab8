@@ -142,6 +142,29 @@ public double getLessonAverage(String courseId, String lessonId) {
     return count == 0 ? 0 : (double) total / count;
 }
 
+public double getStudentAverageQuizScore(String studentId, String courseId) {
+    Student student = studentService.getStudentById(studentId);
+    Course course = courseService.getCourseById(courseId);
+
+    if (student == null || course == null) return 0.0;
+
+    Map<String, Integer> quizScores = student.getQuizScores();
+    if (quizScores == null || quizScores.isEmpty()) return 0.0;
+
+    int total = 0;
+    int count = 0;
+
+    for (Lesson lesson : course.getLessons()) {
+        String lessonId = lesson.getLessonId();
+        if (quizScores.containsKey(lessonId)) {
+            total += quizScores.get(lessonId);
+            count++;
+        }
+    }
+
+    if (count == 0) return 0.0;
+    return total * 1.0 / count;
+}
 
    public double getStudentCourseCompletionPercentage(String studentId, String courseId) {
     Student student = studentService.getStudentById(studentId);
@@ -158,6 +181,17 @@ public double getLessonAverage(String courseId, String lessonId) {
     int completedCount = completedLessons.size();
     return (completedCount * 100.0) / totalLessons;
 }
+   
+   public int getStudentCompletedLessonsCount(String studentId, String courseId) {
+    Student student = studentService.getStudentById(studentId);
+    Course course = courseService.getCourseById(courseId);
+
+    if (student == null || course == null) return 0;
+    return student.getProgress().getOrDefault(courseId, new ArrayList<>()).size();
+}
+   
+   
+   
 public boolean addInstructor(Instructor instructor, UserService users) {
         if (db.stream().anyMatch(i -> i.getUserID().equals(instructor.getUserID()))) return false;
         db.add(instructor);
