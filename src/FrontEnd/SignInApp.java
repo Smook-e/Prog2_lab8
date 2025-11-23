@@ -229,7 +229,7 @@ public class SignInApp {
 
         if (s == null) {
             // If not in students.json yet, create new and add
-            s = new Student(u.getUserID(), u.getUserName(), u.getEmail(), u.getPassword());
+            s = new Student(u.getUserID(), u.getPassword(), u.getUserName(), u.getEmail());
             s.setStudentService(studentService);
             studentService.addStudent(s);
         } else {
@@ -244,7 +244,8 @@ public class SignInApp {
             .findFirst()
             .orElse(null);
     if (inst == null) {
-        inst = new Instructor(u.getUserID(), u.getUserName(), u.getEmail(), u.getPassword());
+         
+        inst = new Instructor(u.getUserID(), u.getPassword(), u.getUserName(), u.getEmail());
         inst.setInstructorManagment(instructorManagment);
         instructorManagment.addInstructor(inst, users);
     } 
